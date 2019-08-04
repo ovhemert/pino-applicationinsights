@@ -9,22 +9,26 @@ class Client {
     appInsights.setup(iKey).start()
     this.insights = appInsights.defaultClient
   }
+
   getLogException (item) {
     if (item.level !== 50 || item.type !== 'Error') { return }
-    let err = new Error(item.msg)
+    const err = new Error(item.msg)
     err.stack = item.stack || ''
     return err
   }
+
   getLogMessage (item) {
     if (item.msg) { return item.msg }
     const severity = this.getLogSeverity(item.level)
     return this.getLogSeverityName(severity)
   }
+
   getLogProperties (item) {
-    let props = Object.assign({}, item)
+    const props = Object.assign({}, item)
     delete props.msg
     return props
   }
+
   getLogSeverity (level) {
     if (level === 10 || level === 20) { return appInsights.Contracts.SeverityLevel.Verbose }
     if (level === 40) { return appInsights.Contracts.SeverityLevel.Warning }
@@ -32,6 +36,7 @@ class Client {
     if (level === 60) { return appInsights.Contracts.SeverityLevel.Critical }
     return appInsights.Contracts.SeverityLevel.Information // 30
   }
+
   getLogSeverityName (severity) {
     if (severity === appInsights.Contracts.SeverityLevel.Verbose) { return 'Verbose' }
     if (severity === appInsights.Contracts.SeverityLevel.Warning) { return 'Warning' }
@@ -39,6 +44,7 @@ class Client {
     if (severity === appInsights.Contracts.SeverityLevel.Critical) { return 'Critical' }
     return 'Information'
   }
+
   insertException (item) {
     const exception = this.getLogException(item)
     if (!exception) { return }
@@ -48,6 +54,7 @@ class Client {
     }
     this.insights.trackException(telemetry)
   }
+
   insertTrace (item) {
     const telemetry = {
       message: this.getLogMessage(item),
@@ -56,6 +63,7 @@ class Client {
     }
     this.insights.trackTrace(telemetry)
   }
+
   async insert (entities = []) {
     const self = this
     const data = Array.isArray(entities) ? entities : [entities]
@@ -70,9 +78,10 @@ class Client {
       throw Error(err.message)
     }
   }
+
   insertStream () {
     const self = this
-    let writeStream = new stream.Writable({ objectMode: true, highWaterMark: 1 })
+    const writeStream = new stream.Writable({ objectMode: true, highWaterMark: 1 })
     writeStream._write = function (chunk, encoding, callback) {
       self.insert(chunk).then(() => { callback(null) }).catch(callback)
     }

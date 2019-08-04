@@ -7,15 +7,15 @@ const sinon = require('sinon')
 
 test('creates client', t => {
   const client = new tested.Client({ key: 'blablabla' })
-  t.ok(client.hasOwnProperty('insights'))
+  t.ok(Object.prototype.hasOwnProperty.call(client, 'insights'))
   t.end()
 })
 
 test('gets exception from log', t => {
   const input = [
-    { 'level': 10, 'time': 1532081790710, 'msg': 'trace message' },
-    { 'level': 50, 'time': 1532081790750, 'msg': 'error message', 'pid': 9118, 'hostname': 'MacBook-Pro.local', 'type': 'Error', 'stack': 'Error: error message', 'v': 1 },
-    { 'level': 50, 'time': 1532081790751, 'msg': 'error message', 'pid': 9118, 'type': 'Error' }
+    { level: 10, time: 1532081790710, msg: 'trace message' },
+    { level: 50, time: 1532081790750, msg: 'error message', pid: 9118, hostname: 'MacBook-Pro.local', type: 'Error', stack: 'Error: error message', v: 1 },
+    { level: 50, time: 1532081790751, msg: 'error message', pid: 9118, type: 'Error' }
   ]
   const client = new tested.Client()
   const output = input.map(log => client.getLogException(log))
@@ -27,8 +27,8 @@ test('gets exception from log', t => {
 
 test('gets message from log', t => {
   const input = [
-    { 'level': 10, 'time': 1532081790710, 'msg': 'trace message' },
-    { 'level': 20, 'time': 1532081790720 }
+    { level: 10, time: 1532081790710, msg: 'trace message' },
+    { level: 20, time: 1532081790720 }
   ]
   const client = new tested.Client()
   const output = input.map(log => client.getLogMessage(log))
@@ -38,12 +38,12 @@ test('gets message from log', t => {
 
 test('gets properties from log', t => {
   const input = [
-    { 'level': 10, 'time': 1532081790710, 'msg': 'trace message' },
-    { 'level': 20, 'time': 1532081790720, 'pid': 23164 }
+    { level: 10, time: 1532081790710, msg: 'trace message' },
+    { level: 20, time: 1532081790720, pid: 23164 }
   ]
   const client = new tested.Client()
   const output = input.map(log => client.getLogProperties(log))
-  t.deepEqual(output, [{ 'level': 10, 'time': 1532081790710 }, { 'level': 20, 'time': 1532081790720, 'pid': 23164 }])
+  t.deepEqual(output, [{ level: 10, time: 1532081790710 }, { level: 20, time: 1532081790720, pid: 23164 }])
   t.end()
 })
 
@@ -64,10 +64,10 @@ test('gets severity name', t => {
 })
 
 test('inserts trace', t => {
-  const input = { 'level': 30, 'time': 1532081790730, 'msg': 'info message', 'pid': 9118 }
+  const input = { level: 30, time: 1532081790730, msg: 'info message', pid: 9118 }
   const client = new tested.Client()
   const stubTrace = sinon.stub(appInsights.defaultClient, 'trackTrace').callsFake(telemetry => {
-    t.deepEqual(telemetry, { message: 'info message', severity: 1, properties: { 'level': 30, 'time': 1532081790730, 'pid': 9118 } })
+    t.deepEqual(telemetry, { message: 'info message', severity: 1, properties: { level: 30, time: 1532081790730, pid: 9118 } })
   })
   client.insertTrace(input)
   stubTrace.restore()
@@ -75,7 +75,7 @@ test('inserts trace', t => {
 })
 
 test('inserts exception', t => {
-  const input = { 'level': 50, 'time': 1532081790750, 'msg': 'error message', 'pid': 9118, 'hostname': 'MacBook-Pro.local', 'type': 'Error', 'stack': 'Error: error message', 'v': 1 }
+  const input = { level: 50, time: 1532081790750, msg: 'error message', pid: 9118, hostname: 'MacBook-Pro.local', type: 'Error', stack: 'Error: error message', v: 1 }
   const client = new tested.Client()
   const stubException = sinon.stub(appInsights.defaultClient, 'trackException').callsFake(telemetry => {
     t.equals(telemetry.exception.message, 'error message')
@@ -87,7 +87,7 @@ test('inserts exception', t => {
 })
 
 test('does not insert malformed exception', t => {
-  const input = { 'level': 30, 'time': 1532081790750, 'msg': 'error message', 'pid': 9118, 'hostname': 'MacBook-Pro.local', 'type': 'Error', 'stack': 'Error: error message', 'v': 1 }
+  const input = { level: 30, time: 1532081790750, msg: 'error message', pid: 9118, hostname: 'MacBook-Pro.local', type: 'Error', stack: 'Error: error message', v: 1 }
   const client = new tested.Client()
   const stubException = sinon.stub(appInsights.defaultClient, 'trackException')
   client.insertException(input)
@@ -97,7 +97,7 @@ test('does not insert malformed exception', t => {
 })
 
 test('inserts throws exception', t => {
-  const input = { 'level': 50, 'time': 1532081790750, 'msg': 'error message', 'pid': 9118, 'hostname': 'MacBook-Pro.local', 'type': 'Error', 'stack': 'Error: error message', 'v': 1 }
+  const input = { level: 50, time: 1532081790750, msg: 'error message', pid: 9118, hostname: 'MacBook-Pro.local', type: 'Error', stack: 'Error: error message', v: 1 }
   const client = new tested.Client()
   const stubTrace = sinon.stub(appInsights.defaultClient, 'trackTrace').throws()
   const insert = client.insert(input)
@@ -107,7 +107,7 @@ test('inserts throws exception', t => {
 })
 
 test('calls insert without document', t => {
-  let client = new tested.Client()
+  const client = new tested.Client()
   client.insert().then(data => {
     t.equals(data, undefined)
     t.end()
@@ -116,8 +116,8 @@ test('calls insert without document', t => {
 
 test('inserts multiple documents', t => {
   const input = [
-    { 'level': 30, 'time': 1532081790730, 'msg': 'info message', 'pid': 9118 },
-    { 'level': 50, 'time': 1532081790750, 'msg': 'error message', 'pid': 9118, 'type': 'Error', 'stack': 'Error: error message' }
+    { level: 30, time: 1532081790730, msg: 'info message', pid: 9118 },
+    { level: 50, time: 1532081790750, msg: 'error message', pid: 9118, type: 'Error', stack: 'Error: error message' }
   ]
   const stubTrace = sinon.stub(appInsights.defaultClient, 'trackTrace')
   const stubException = sinon.stub(appInsights.defaultClient, 'trackException')
@@ -133,9 +133,9 @@ test('inserts multiple documents', t => {
 
 test('inserts with write stream', t => {
   const stubTrace = sinon.stub(appInsights.defaultClient, 'trackTrace')
-  let client = new tested.Client()
-  const log = { 'level': 30, 'time': 1553862903459, 'pid': 23164, 'hostname': 'Osmonds-MacBook-Pro.local', 'msg': 'info message', 'v': 1 }
-  let ws = client.insertStream()
+  const client = new tested.Client()
+  const log = { level: 30, time: 1553862903459, pid: 23164, hostname: 'Osmonds-MacBook-Pro.local', msg: 'info message', v: 1 }
+  const ws = client.insertStream()
   ws.write(log)
   ws.end()
   t.ok(stubTrace.called)
