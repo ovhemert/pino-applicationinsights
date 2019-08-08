@@ -37,7 +37,7 @@
   ],
   "devDependencies": {
     "pino-multi-stream": "^4.1.0",
-    "sinon": "^7.3.2",
+    "sinon": "^7.4.1",
     "standard": "^13.1.0",
     "tap": "^14.6.1"
   },
