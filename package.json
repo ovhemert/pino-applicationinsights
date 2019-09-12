@@ -36,15 +36,15 @@
     "test"
   ],
   "devDependencies": {
-    "pino-multi-stream": "^4.1.0",
-    "sinon": "^7.4.1",
-    "standard": "^14.0.0",
-    "tap": "^14.6.1"
+    "pino-multi-stream": "^4.2.0",
+    "sinon": "^7.4.2",
+    "standard": "^14.2.0",
+    "tap": "^14.6.2"
   },
   "dependencies": {
-    "applicationinsights": "^1.4.0",
-    "batch2": "^1.0.5",
-    "commander": "^3.0.0",
+    "applicationinsights": "^1.4.2",
+    "batch2": "^1.0.6",
+    "commander": "^3.0.1",
     "fast-json-parse": "^1.0.3",
     "pumpify": "^2.0.0",
     "split2": "^3.1.1",
