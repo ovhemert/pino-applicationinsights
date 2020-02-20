@@ -5,7 +5,7 @@ const split2 = require('split2')
 const fastJsonParse = require('fast-json-parse')
 
 function batchStream (size) {
-  return batch2.obj({ size })
+  return batch2.obj(size)
 }
 
 function parseJsonStream () {
