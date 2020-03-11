@@ -9,7 +9,7 @@ async function createWriteStream (options = {}) {
   const client = new insights.Client(options)
 
   const parseJsonStream = streams.parseJsonStream()
-  const batchStream = streams.batchStream({ size: 1 })
+  const batchStream = streams.batchStream(1)
 
   const writeStream = client.insertStream()
 
