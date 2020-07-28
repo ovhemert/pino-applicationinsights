@@ -1,6 +1,6 @@
 {
   "name": "pino-applicationinsights",
-  "version": "1.0.6",
+  "version": "2.0.0",
   "description": "A transport for pino that sends messages to Azure Application Insights",
   "homepage": "https://github.com/ovhemert/pino-applicationinsights",
   "main": "src/index.js",
@@ -36,15 +36,15 @@
     "test"
   ],
   "devDependencies": {
-    "pino-multi-stream": "^5.0.0",
+    "pino-multi-stream": "^5.1.1",
     "sinon": "^9.0.2",
-    "standard": "^14.3.3",
-    "tap": "^14.10.7"
+    "standard": "^14.3.4",
+    "tap": "^14.10.8"
   },
   "dependencies": {
-    "applicationinsights": "^1.7.6",
+    "applicationinsights": "^1.8.2",
     "batch2": "^1.0.6",
-    "commander": "^5.1.0",
+    "commander": "^6.0.0",
     "fast-json-parse": "^1.0.3",
     "pumpify": "^2.0.1",
     "split2": "^3.1.1",

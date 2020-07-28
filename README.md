@@ -1,6 +1,6 @@
 # pino-applicationinsights
 
-[![Travis](https://img.shields.io/travis/com/ovhemert/pino-applicationinsights.svg?branch=master&logo=travis)](https://travis-ci.com/ovhemert/pino-applicationinsights)
+[![CI](https://github.com/ovhemert/pino-applicationinsights/workflows/CI/badge.svg)](https://github.com/ovhemert/pino-applicationinsights/actions)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/2913ed8b1afa45de9a2dbcf965b94773)](https://www.codacy.com/app/ovhemert/pino-applicationinsights?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ovhemert/pino-applicationinsights&amp;utm_campaign=Badge_Grade)
 [![Known Vulnerabilities](https://snyk.io/test/npm/pino-applicationinsights/badge.svg)](https://snyk.io/test/npm/pino-applicationinsights)
 [![Coverage Status](https://coveralls.io/repos/github/ovhemert/pino-applicationinsights/badge.svg?branch=master)](https://coveralls.io/github/ovhemert/pino-applicationinsights?branch=master)
