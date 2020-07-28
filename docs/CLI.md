@@ -3,7 +3,7 @@
 To use `pino-applicationinsights` from the command line, you need to install it globally:
 
 ```bash
-$ npm install -g pino-applicationinsights
+npm install -g pino-applicationinsights
 ```
 
 ## Example
@@ -11,7 +11,7 @@ $ npm install -g pino-applicationinsights
 Given an application `foo` that logs via pino, you would use `pino-applicationinsights` like so:
 
 ```bash
-$ node foo | pino-applicationinsights --key blablabla
+node foo | pino-applicationinsights --key blablabla
 ```
 
 ## Usage
