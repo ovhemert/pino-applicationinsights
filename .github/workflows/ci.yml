@@ -23,11 +23,12 @@ jobs:
         run: npm install
       - name: Run Tests
         run: npm test
-      - name: Coveralls Parallel
+      - name: Coveralls
         uses: coverallsapp/github-action@master
+        env:
+          COVERALLS_FLAG_NAME: run-${{ matrix.os }}-${{ matrix.node-version }}
         with:
           github-token: ${{ secrets.github_token }}
-          flag-name: run-${{ matrix.os }}-${{ matrix.node-version }}
           parallel: true
   finish:
     needs: build
