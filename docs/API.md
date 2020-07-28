@@ -10,7 +10,7 @@ const pinoms = require('pino-multi-stream')
 // create the Azure Application Insights destination stream
 const writeStream = await insights.createWriteStream()
 // create pino loggger
-const logger = pinoms({ streams: [writeStream] })
+const logger = pinoms({ streams: [{stream: writeStream }] })
 // log some events
 logger.info('Informational message')
 logger.error(new Error('things got bad'), 'error message')
