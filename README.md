@@ -13,13 +13,13 @@ This module provides a "transport" for [pino][pino] that forwards messages to a 
 To use globally from command line:
 
 ```bash
-$ npm install -g pino-applicationinsights
+npm install -g pino-applicationinsights
 ```
 
 To include as a library in your project:
 
 ```bash
-$ npm install pino-applicationinsights
+npm install pino-applicationinsights
 ```
 
 ## CLI
