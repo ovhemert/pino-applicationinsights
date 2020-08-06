@@ -5,8 +5,12 @@ const stream = require('stream')
 
 class Client {
   constructor (options = {}) {
-    const iKey = options.key || process.env.APPINSIGHTS_INSTRUMENTATIONKEY
-    appInsights.setup(iKey).start()
+    if (options.setup) {
+      options.setup(appInsights)
+    } else {
+      const iKey = options.key || process.env.APPINSIGHTS_INSTRUMENTATIONKEY
+      appInsights.setup(iKey).start()
+    }
     this.insights = appInsights.defaultClient
   }
 

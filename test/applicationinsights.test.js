@@ -11,6 +11,18 @@ test('creates client', t => {
   t.end()
 })
 
+test('creates client with custom applicationInsights', t => {
+  const client = new tested.Client({
+    setup: insights => {
+      insights.setup('blablabla').setUseDiskRetryCaching(false).start()
+      insights.defaultClient.config.endpointUrl = 'https://custom.endpoint'
+    }
+  })
+  t.equals(client.insights.config.instrumentationKey, 'blablabla')
+  t.equals(client.insights.config.endpointUrl, 'https://custom.endpoint')
+  t.end()
+})
+
 test('gets exception from log', t => {
   const input = [
     { level: 10, time: 1532081790710, msg: 'trace message' },
