@@ -13,9 +13,19 @@ Changes are grouped by:
 `Fixed` for any bug fixes
 `Security` in case of vulnerabilities
 
-## [Unreleased](https://github.com/ovhemert/pino-applicationinsights/compare/v2.0.0...HEAD)
+## [Unreleased](https://github.com/ovhemert/pino-applicationinsights/compare/v2.1.0...HEAD)
 
 - ...
+
+## [2.1.0](https://github.com/ovhemert/pino-applicationinsights/compare/v2.0.0...v2.1.0) - 2020-09-04
+
+### Added
+
+- Possibility to setup Application Insights with custom options [@throngar](https://github.com/throngar)
+
+### Security
+
+- Fixed external vulnerabilities by upgrading dependencies by [@ovhemert](https://github.com/ovhemert)
 
 ## [2.0.0](https://github.com/ovhemert/pino-applicationinsights/compare/v1.0.6...v2.0.0) - 2020-07-28
 
