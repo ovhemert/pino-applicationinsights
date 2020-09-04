@@ -28,10 +28,25 @@ Example:
 const writeStream = await insights.createWriteStream({
   key: 'instrumentationkey'
 })
-````
+```
 
 #### key
 
 Type: `String` *(optional)*
 
 The Instrumentation Key of the Azure Application Insights account. If not specified, defaults to APPINSIGHTS_INSTRUMENTATIONKEY environment variable.
+
+Or you could configure Azure Application Insights with your custom preferences by passing `setup` callback property:
+
+```js
+const writeStream = await insights.createWriteStream({
+  setup: (applicationInsights) =>
+    applicationInsights
+      .setup('instrumentationkey')
+      .setAutoCollectRequests(false)        
+      .setAutoCollectDependencies(false)
+      .start()
+})
+```
+
+The only parameter of the callback is the applicationInsights instate to setup and call `start` on.

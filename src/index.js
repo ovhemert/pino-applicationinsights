@@ -5,7 +5,7 @@ const streams = require('./streams')
 const pumpify = require('pumpify')
 
 async function createWriteStream (options = {}) {
-  if (!options.key && !process.env.APPINSIGHTS_INSTRUMENTATIONKEY) { throw Error('Instrumentation key missing') }
+  if (!options.setup && !options.key && !process.env.APPINSIGHTS_INSTRUMENTATIONKEY) { throw Error('Instrumentation key missing') }
   const client = new insights.Client(options)
 
   const parseJsonStream = streams.parseJsonStream()
