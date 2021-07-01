@@ -18,7 +18,7 @@ test('streams to batches', t => {
 test('streams valid json', t => {
   const writeStream = tested.parseJsonStream()
   writeStream.on('data', chunk => {
-    t.deepEqual(chunk, { id: '1', name: 'item 1' })
+    t.same(chunk, { id: '1', name: 'item 1' })
     t.end()
   })
   writeStream.write('{ "id": "1", "name": "item 1" }')

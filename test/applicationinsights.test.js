@@ -18,8 +18,8 @@ test('creates client with custom applicationInsights', t => {
       insights.defaultClient.config.endpointUrl = 'https://custom.endpoint'
     }
   })
-  t.equals(client.insights.config.instrumentationKey, 'blablabla')
-  t.equals(client.insights.config.endpointUrl, 'https://custom.endpoint')
+  t.equal(client.insights.config.instrumentationKey, 'blablabla')
+  t.equal(client.insights.config.endpointUrl, 'https://custom.endpoint')
   t.end()
 })
 
@@ -31,9 +31,9 @@ test('gets exception from log', t => {
   ]
   const client = new tested.Client()
   const output = input.map(log => client.getLogException(log))
-  t.equals(output[0], undefined)
-  t.equals(output[1].message, 'error message')
-  t.equals(output[2].stack, '')
+  t.equal(output[0], undefined)
+  t.equal(output[1].message, 'error message')
+  t.equal(output[2].stack, '')
   t.end()
 })
 
@@ -44,7 +44,7 @@ test('gets message from log', t => {
   ]
   const client = new tested.Client()
   const output = input.map(log => client.getLogMessage(log))
-  t.deepEqual(output, ['trace message', 'Verbose'])
+  t.same(output, ['trace message', 'Verbose'])
   t.end()
 })
 
@@ -55,7 +55,7 @@ test('gets properties from log', t => {
   ]
   const client = new tested.Client()
   const output = input.map(log => client.getLogProperties(log))
-  t.deepEqual(output, [{ level: 10, time: 1532081790710 }, { level: 20, time: 1532081790720, pid: 23164 }])
+  t.same(output, [{ level: 10, time: 1532081790710 }, { level: 20, time: 1532081790720, pid: 23164 }])
   t.end()
 })
 
@@ -63,7 +63,7 @@ test('converts severity level', t => {
   const input = [10, 20, 30, 40, 50, 60, 99]
   const client = new tested.Client()
   const output = input.map(level => client.getLogSeverity(level))
-  t.deepEqual(output, [0, 0, 1, 2, 3, 4, 1])
+  t.same(output, [0, 0, 1, 2, 3, 4, 1])
   t.end()
 })
 
@@ -71,7 +71,7 @@ test('gets severity name', t => {
   const input = [0, 1, 2, 3, 4]
   const client = new tested.Client()
   const output = input.map(level => client.getLogSeverityName(level))
-  t.deepEqual(output, ['Verbose', 'Information', 'Warning', 'Error', 'Critical'])
+  t.same(output, ['Verbose', 'Information', 'Warning', 'Error', 'Critical'])
   t.end()
 })
 
@@ -79,7 +79,7 @@ test('inserts trace', t => {
   const input = { level: 30, time: 1532081790730, msg: 'info message', pid: 9118 }
   const client = new tested.Client()
   const stubTrace = sinon.stub(appInsights.defaultClient, 'trackTrace').callsFake(telemetry => {
-    t.deepEqual(telemetry, { message: 'info message', severity: 1, properties: { level: 30, time: 1532081790730, pid: 9118 } })
+    t.same(telemetry, { message: 'info message', severity: 1, properties: { level: 30, time: 1532081790730, pid: 9118 } })
   })
   client.insertTrace(input)
   stubTrace.restore()
@@ -90,8 +90,8 @@ test('inserts exception', t => {
   const input = { level: 50, time: 1532081790750, msg: 'error message', pid: 9118, hostname: 'MacBook-Pro.local', type: 'Error', stack: 'Error: error message', v: 1 }
   const client = new tested.Client()
   const stubException = sinon.stub(appInsights.defaultClient, 'trackException').callsFake(telemetry => {
-    t.equals(telemetry.exception.message, 'error message')
-    t.equals(telemetry.properties.level, 50)
+    t.equal(telemetry.exception.message, 'error message')
+    t.equal(telemetry.properties.level, 50)
   })
   client.insertException(input)
   stubException.restore()
@@ -121,7 +121,7 @@ test('inserts throws exception', t => {
 test('calls insert without document', t => {
   const client = new tested.Client()
   client.insert().then(data => {
-    t.equals(data, undefined)
+    t.equal(data, undefined)
     t.end()
   })
 })
@@ -136,8 +136,8 @@ test('inserts multiple documents', t => {
   const client = new tested.Client()
   const insert = client.insert(input)
   t.resolves(insert)
-  t.equals(stubTrace.callCount, 2)
-  t.equals(stubException.callCount, 1)
+  t.equal(stubTrace.callCount, 2)
+  t.equal(stubException.callCount, 1)
   stubTrace.restore()
   stubException.restore()
   t.end()
