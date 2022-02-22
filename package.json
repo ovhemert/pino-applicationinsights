@@ -42,7 +42,7 @@
     "tap": "^15.0.9"
   },
   "dependencies": {
-    "applicationinsights": "^2.1.4",
+    "applicationinsights": "^2.2.1",
     "batch2": "^2.0.0",
     "commander": "^6.2.1",
     "fast-json-parse": "^1.0.3",
