@@ -12,7 +12,7 @@ function main () {
     .option('-k, --key <key>', 'Application Insights Instrumentation Key')
     .action(async ({ key }) => {
       try {
-        const writeStream = await pinoInsights.createWriteStream({ key })
+        const writeStream = await pinoInsights.createWriteStreamSync({ key })
         process.stdin.pipe(writeStream)
         console.info('logging')
       } catch (error) {
