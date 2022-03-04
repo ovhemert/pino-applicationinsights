@@ -5,12 +5,11 @@ const tested = require('../src/index')
 
 test('creates write stream', t => {
   const ws = tested.createWriteStreamSync({ key: 'blablabla' })
-  t.resolves(ws)
+  t.ok(ws)
   t.end()
 })
 
 test('does not create write stream without key', t => {
-  const ws = tested.createWriteStreamSync()
-  t.rejects(ws)
+  t.throws(tested.createWriteStreamSync)
   t.end()
 })
