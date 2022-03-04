@@ -8,7 +8,7 @@ Example:
 const insights = require('pino-applicationinsights')
 const pinoms = require('pino-multi-stream')
 // create the Azure Application Insights destination stream
-const writeStream = await insights.createWriteStreamSync()
+const writeStream = insights.createWriteStreamSync()
 // create pino loggger
 const logger = pinoms({ streams: [{stream: writeStream }] })
 // log some events
@@ -25,7 +25,7 @@ The `createWriteStreamSync` function creates a writestream that `pino-multi-stre
 Example:
 
 ```js
-const writeStream = await insights.createWriteStreamSync({
+const writeStream = insights.createWriteStreamSync({
   key: 'instrumentationkey'
 })
 ```
@@ -39,7 +39,7 @@ The Instrumentation Key of the Azure Application Insights account. If not specif
 Or you could configure Azure Application Insights with your custom preferences by passing `setup` callback property:
 
 ```js
-const writeStream = await insights.createWriteStreamSync({
+const writeStream = insights.createWriteStreamSync({
   setup: (applicationInsights) =>
     applicationInsights
       .setup('instrumentationkey')
