@@ -79,7 +79,7 @@ class Client {
       })
       return
     } catch (err) {
-      throw Error(err.message)
+      throw new Error(err.message)
     }
   }
 

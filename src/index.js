@@ -10,7 +10,7 @@ async function createWriteStreamSync (options = {}) {
     !options.key &&
     !process.env.APPINSIGHTS_INSTRUMENTATIONKEY
   ) {
-    throw Error('Instrumentation key missing')
+    throw new Error('Instrumentation key missing')
   }
 
   const client = new insights.Client(options)
