@@ -4,7 +4,17 @@ const insights = require('./applicationinsights')
 const streams = require('./streams')
 const pumpify = require('pumpify')
 
-async function createWriteStreamSync (options = {}) {
+async function createWriteStreamSync (
+  /**
+   * @type {{
+   *   setup?: (
+   *     appInsights: typeof import('applicationinsights')
+   *   ) => typeof import('applicationinsights').Configuration,
+   *   key?: string
+   * }}
+   */
+  options = {}
+) {
   if (
     !options.setup &&
     !options.key &&
