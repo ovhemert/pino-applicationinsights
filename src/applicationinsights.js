@@ -72,15 +72,10 @@ class Client {
     const self = this
     const data = Array.isArray(entities) ? entities : [entities]
     if (data.length <= 0) { return }
-    try {
-      data.forEach((entity) => {
-        self.insertTrace(entity)
-        if (entity.level === 50) { self.insertException(entity) }
-      })
-      return
-    } catch (err) {
-      throw new Error(err.message)
-    }
+    data.forEach((entity) => {
+      self.insertTrace(entity)
+      if (entity.level === 50) { self.insertException(entity) }
+    })
   }
 
   insertStream () {
