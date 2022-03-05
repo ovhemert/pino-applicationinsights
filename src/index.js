@@ -4,7 +4,7 @@ const insights = require('./applicationinsights')
 const streams = require('./streams')
 const pumpify = require('pumpify')
 
-async function createWriteStreamSync (
+function createWriteStreamSync (
   /**
    * @type {{
    *   setup?: (

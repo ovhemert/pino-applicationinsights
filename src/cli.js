@@ -10,9 +10,9 @@ function main () {
   program
     .version(pkg.version)
     .option('-k, --key <key>', 'Application Insights Instrumentation Key')
-    .action(async ({ key }) => {
+    .action(({ key }) => {
       try {
-        const writeStream = await pinoInsights.createWriteStreamSync({ key })
+        const writeStream = pinoInsights.createWriteStreamSync({ key })
         process.stdin.pipe(writeStream)
         console.info('logging')
       } catch (error) {

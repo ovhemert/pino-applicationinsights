@@ -68,7 +68,7 @@ class Client {
     this.insights.trackTrace(telemetry)
   }
 
-  async insert (entities = []) {
+  insert (entities = []) {
     const data = Array.isArray(entities) ? entities : [entities]
     if (data.length <= 0) { return }
     data.forEach((entity) => {
