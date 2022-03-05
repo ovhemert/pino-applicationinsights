@@ -112,18 +112,16 @@ test('inserts throws exception', t => {
   const input = { level: 50, time: 1532081790750, msg: 'error message', pid: 9118, hostname: 'MacBook-Pro.local', type: 'Error', stack: 'Error: error message', v: 1 }
   const client = new tested.Client()
   const stubTrace = sinon.stub(appInsights.defaultClient, 'trackTrace').throws()
-  const insert = client.insert(input)
-  t.rejects(insert)
+  t.throws(() => client.insert(input))
   stubTrace.restore()
   t.end()
 })
 
 test('calls insert without document', t => {
   const client = new tested.Client()
-  client.insert().then(data => {
-    t.equals(data, undefined)
-    t.end()
-  })
+  const data = client.insert()
+  t.equals(data, undefined)
+  t.end()
 })
 
 test('inserts multiple documents', t => {
@@ -134,8 +132,7 @@ test('inserts multiple documents', t => {
   const stubTrace = sinon.stub(appInsights.defaultClient, 'trackTrace')
   const stubException = sinon.stub(appInsights.defaultClient, 'trackException')
   const client = new tested.Client()
-  const insert = client.insert(input)
-  t.resolves(insert)
+  t.doesNotThrow(() => client.insert(input))
   t.equals(stubTrace.callCount, 2)
   t.equals(stubException.callCount, 1)
   stubTrace.restore()

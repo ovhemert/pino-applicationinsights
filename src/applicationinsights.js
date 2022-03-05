@@ -80,7 +80,12 @@ class Client {
   insertStream () {
     const writeStream = new stream.Writable({ objectMode: true, highWaterMark: 1 })
     writeStream._write = (chunk, encoding, callback) => {
-      this.insert(chunk).then(() => { callback(null) }).catch(callback)
+      try {
+        this.insert(chunk)
+        callback(null)
+      } catch (e) {
+        callback(e)
+      }
     }
     return writeStream
   }
