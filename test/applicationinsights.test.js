@@ -18,8 +18,8 @@ test('creates client with custom applicationInsights', t => {
       insights.defaultClient.config.endpointUrl = 'https://custom.endpoint'
     }
   })
-  t.equals(client.insights.config.instrumentationKey, 'blablabla')
-  t.equals(client.insights.config.endpointUrl, 'https://custom.endpoint')
+  t.equal(client.insights.config.instrumentationKey, 'blablabla')
+  t.equal(client.insights.config.endpointUrl, 'https://custom.endpoint')
   t.end()
 })
 
@@ -31,9 +31,9 @@ test('gets exception from log', t => {
   ]
   const client = new tested.Client()
   const output = input.map(log => client.getLogException(log))
-  t.equals(output[0], undefined)
-  t.equals(output[1].message, 'error message')
-  t.equals(output[2].stack, '')
+  t.equal(output[0], undefined)
+  t.equal(output[1].message, 'error message')
+  t.equal(output[2].stack, '')
   t.end()
 })
 
@@ -90,8 +90,8 @@ test('inserts exception', t => {
   const input = { level: 50, time: 1532081790750, msg: 'error message', pid: 9118, hostname: 'MacBook-Pro.local', type: 'Error', stack: 'Error: error message', v: 1 }
   const client = new tested.Client()
   const stubException = sinon.stub(appInsights.defaultClient, 'trackException').callsFake(telemetry => {
-    t.equals(telemetry.exception.message, 'error message')
-    t.equals(telemetry.properties.level, 50)
+    t.equal(telemetry.exception.message, 'error message')
+    t.equal(telemetry.properties.level, 50)
   })
   client.insertException(input)
   stubException.restore()
@@ -120,7 +120,7 @@ test('inserts throws exception', t => {
 test('calls insert without document', t => {
   const client = new tested.Client()
   const data = client.insert()
-  t.equals(data, undefined)
+  t.equal(data, undefined)
   t.end()
 })
 
@@ -133,8 +133,8 @@ test('inserts multiple documents', t => {
   const stubException = sinon.stub(appInsights.defaultClient, 'trackException')
   const client = new tested.Client()
   t.doesNotThrow(() => client.insert(input))
-  t.equals(stubTrace.callCount, 2)
-  t.equals(stubException.callCount, 1)
+  t.equal(stubTrace.callCount, 2)
+  t.equal(stubException.callCount, 1)
   stubTrace.restore()
   stubException.restore()
   t.end()
