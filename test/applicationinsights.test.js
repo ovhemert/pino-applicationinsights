@@ -44,7 +44,7 @@ test('gets message from log', t => {
   ]
   const client = new tested.Client()
   const output = input.map(log => client.getLogMessage(log))
-  t.deepEqual(output, ['trace message', 'Verbose'])
+  t.same(output, ['trace message', 'Verbose'])
   t.end()
 })
 
@@ -55,7 +55,7 @@ test('gets properties from log', t => {
   ]
   const client = new tested.Client()
   const output = input.map(log => client.getLogProperties(log))
-  t.deepEqual(output, [{ level: 10, time: 1532081790710 }, { level: 20, time: 1532081790720, pid: 23164 }])
+  t.same(output, [{ level: 10, time: 1532081790710 }, { level: 20, time: 1532081790720, pid: 23164 }])
   t.end()
 })
 
@@ -63,7 +63,7 @@ test('converts severity level', t => {
   const input = [10, 20, 30, 40, 50, 60, 99]
   const client = new tested.Client()
   const output = input.map(level => client.getLogSeverity(level))
-  t.deepEqual(output, [0, 0, 1, 2, 3, 4, 1])
+  t.same(output, [0, 0, 1, 2, 3, 4, 1])
   t.end()
 })
 
@@ -71,7 +71,7 @@ test('gets severity name', t => {
   const input = [0, 1, 2, 3, 4]
   const client = new tested.Client()
   const output = input.map(level => client.getLogSeverityName(level))
-  t.deepEqual(output, ['Verbose', 'Information', 'Warning', 'Error', 'Critical'])
+  t.same(output, ['Verbose', 'Information', 'Warning', 'Error', 'Critical'])
   t.end()
 })
 
@@ -79,7 +79,7 @@ test('inserts trace', t => {
   const input = { level: 30, time: 1532081790730, msg: 'info message', pid: 9118 }
   const client = new tested.Client()
   const stubTrace = sinon.stub(appInsights.defaultClient, 'trackTrace').callsFake(telemetry => {
-    t.deepEqual(telemetry, { message: 'info message', severity: 1, properties: { level: 30, time: 1532081790730, pid: 9118 } })
+    t.same(telemetry, { message: 'info message', severity: 1, properties: { level: 30, time: 1532081790730, pid: 9118 } })
   })
   client.insertTrace(input)
   stubTrace.restore()
