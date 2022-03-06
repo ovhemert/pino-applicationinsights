@@ -4,6 +4,9 @@ const insights = require('./applicationinsights')
 const streams = require('./streams')
 const pumpify = require('pumpify')
 
+/**
+ * Should `createWriteStream` need to resolve asynchronously in the future, this method may be removed.
+ */
 function createWriteStreamSync (
   /**
    * @type {{
@@ -33,4 +36,18 @@ function createWriteStreamSync (
   return pumpify(parseJsonStream, batchStream, writeStream)
 }
 
-module.exports.createWriteStreamSync = createWriteStreamSync
+/**
+ * This forces callers to use `await` which in turn will allow next-logger to use `await` should we need to in the future (without causing any breaking changes)
+ *
+ * You should probably use `createWriteStreamSync` instead.
+ *
+ * @deprecated
+ */
+async function createWriteStream (...args) {
+  return createWriteStreamSync(...args)
+}
+
+module.exports = {
+  createWriteStream,
+  createWriteStreamSync
+}
