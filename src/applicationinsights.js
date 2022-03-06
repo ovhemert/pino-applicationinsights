@@ -88,7 +88,7 @@ class Client {
         this.insert(chunk)
         callback(null)
       } catch (e) {
-        callback(e)
+        callback(e) // uncovered...
       }
     }
     return writeStream
