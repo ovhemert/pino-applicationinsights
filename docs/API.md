@@ -22,6 +22,8 @@ logger.error(new Error('things got bad'), 'error message')
 
 The `createWriteStreamSync` function creates a writestream that `pino-multi-stream` can use to send logs to.
 
+The `createWriteStream` function is removed.
+
 Example:
 
 ```js
