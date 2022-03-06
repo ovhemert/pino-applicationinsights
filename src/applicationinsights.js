@@ -69,20 +69,18 @@ class Client {
   }
 
   async insert (entities = []) {
-    const self = this
     const data = Array.isArray(entities) ? entities : [entities]
     if (data.length <= 0) { return }
     data.forEach((entity) => {
-      self.insertTrace(entity)
-      if (entity.level === 50) { self.insertException(entity) }
+      this.insertTrace(entity)
+      if (entity.level === 50) { this.insertException(entity) }
     })
   }
 
   insertStream () {
-    const self = this
     const writeStream = new stream.Writable({ objectMode: true, highWaterMark: 1 })
-    writeStream._write = function (chunk, encoding, callback) {
-      self.insert(chunk).then(() => { callback(null) }).catch(callback)
+    writeStream._write = (chunk, encoding, callback) => {
+      this.insert(chunk).then(() => { callback(null) }).catch(callback)
     }
     return writeStream
   }
