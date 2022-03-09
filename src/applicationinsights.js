@@ -68,7 +68,7 @@ class Client {
     this.insights.trackTrace(telemetry)
   }
 
-  async insert (entities = []) {
+  insert (entities = []) {
     const self = this
     const data = Array.isArray(entities) ? entities : [entities]
     if (data.length <= 0) { return }
@@ -86,8 +86,13 @@ class Client {
   insertStream () {
     const self = this
     const writeStream = new stream.Writable({ objectMode: true, highWaterMark: 1 })
-    writeStream._write = function (chunk, encoding, callback) {
-      self.insert(chunk).then(() => { callback(null) }).catch(callback)
+    writeStream._write = (chunk, encoding, callback) => {
+      try {
+        self.insert(chunk)
+        callback(null)
+      } catch (e) {
+        callback(e)
+      }
     }
     return writeStream
   }
