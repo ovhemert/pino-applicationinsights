@@ -6,19 +6,16 @@ const stream = require('stream')
 class AppInsightsClient {
   constructor(
     /**
-     * @type {{
-     *   setup: (
-     *     applicationinsights: import('applicationinsights')
-     *   ) => void
-     * }}
+     * @type {import('./setupAppInsights').setupAppInsights}
      */
-    options,
+    setupAppInsights,
   ) {
-    options.setup(
-      appInsights,
-    )
+    const appInsightsInstance =
+      setupAppInsights(
+        appInsights,
+      )
     this.insights =
-      appInsights.defaultClient
+      appInsightsInstance.defaultClient
   }
 
   getLogException(item) {

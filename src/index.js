@@ -1,22 +1,23 @@
 'use strict'
 
-const insights = require('./appinsights-client')
+const {
+  AppInsightsClient,
+} = require('./appinsights-client')
 const streams = require('./streams')
 const pumpify = require('pumpify')
 
 function createWriteStreamSync(
   /**
-   * @type {{
-   *   setup: (
-   *     appInsights: typeof import('applicationinsights')
-   *   ) => typeof import('applicationinsights').Configuration,
-   * }}
+   * @type {import('./setupAppInsights').setupAppInsights}
    */
-  options,
+  setupAppInsights,
 ) {
-  if (!options.setup) {
+  if (
+    typeof setupAppInsights ===
+    'object'
+  ) {
     throw new Error(
-      'setup function required. No other options are supported anymore.',
+      "Options object no longer supported. Pass in one setupAppInsights function. Must be at least: require('applicationinsights').setup(process.env.APPINSIGHTS_CONNECTIONSTRING).start()",
     )
   }
 
@@ -28,8 +29,8 @@ function createWriteStreamSync(
     )
 
   const aiClientWriteStream =
-    new insights.AppInsightsClient(
-      options,
+    new AppInsightsClient(
+      setupAppInsights,
     ).insertStream()
 
   return new pumpify(
