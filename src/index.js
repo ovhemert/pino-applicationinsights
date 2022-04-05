@@ -20,11 +20,6 @@ function createWriteStreamSync(
     )
   }
 
-  const client =
-    new insights.Client(
-      options,
-    )
-
   const parseJsonStream =
     streams.parseJsonStream()
   const batchStream =
@@ -32,13 +27,15 @@ function createWriteStreamSync(
       1,
     )
 
-  const writeStream =
-    client.insertStream()
+  const aiClientWriteStream =
+    new insights.Client(
+      options,
+    ).insertStream()
 
   return new pumpify(
     parseJsonStream,
     batchStream,
-    writeStream,
+    aiClientWriteStream,
   )
 }
 
