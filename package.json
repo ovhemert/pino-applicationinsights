@@ -37,6 +37,7 @@
   ],
   "devDependencies": {
     "pino-multi-stream": "^5.1.1",
+    "prettier": "^2.6.2",
     "sinon": "^11.1.2",
     "standard": "^16.0.3",
     "tap": "^15.0.9"
