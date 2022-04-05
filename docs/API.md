@@ -9,7 +9,7 @@ const insights = require('pino-applicationinsights')
 const pinoms = require('pino-multi-stream')
 // create the Azure Application Insights destination stream
 const writeStream =
-  insights.createWriteStreamSync()
+  insights.createAppInsightsWriteStream()
 // create pino loggger
 const logger = pinoms({
   streams: [
@@ -28,9 +28,9 @@ logger.error(
 
 ## Functions
 
-### createWriteStreamSync
+### createAppInsightsWriteStream
 
-The `createWriteStreamSync` function creates a writestream that `pino-multi-stream` can use to send logs to.
+The `createAppInsightsWriteStream` function creates a writestream that `pino-multi-stream` can use to send logs to.
 
 The `createWriteStream` function is removed.
 
@@ -38,7 +38,7 @@ Example:
 
 ```js
 const writeStream =
-  insights.createWriteStreamSync({
+  insights.createAppInsightsWriteStream({
     key: 'instrumentationkey',
   })
 ```
@@ -53,7 +53,7 @@ Or you could configure Azure Application Insights with your custom preferences b
 
 ```js
 const writeStream =
-  insights.createWriteStreamSync({
+  insights.createAppInsightsWriteStream({
     setup: (applicationInsights) =>
       applicationInsights
         .setup('instrumentationkey')

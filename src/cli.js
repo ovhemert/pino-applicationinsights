@@ -16,7 +16,7 @@ function main() {
     .action(({ key }) => {
       try {
         const writeStream =
-          pinoInsights.createWriteStreamSync(
+          pinoInsights.createAppInsightsWriteStream(
             { key },
           )
         process.stdin.pipe(writeStream)
