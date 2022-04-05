@@ -6,9 +6,9 @@
   "main": "src/index.js",
   "scripts": {
     "dev:cli": "node ./test/debug.js | node ./src/cli.js",
-    "lint": "standard",
-    "test": "standard && tap test/*.test.js --coverage --100",
-    "test:report": "standard && tap test/*.test.js --coverage  --coverage-report=html --100",
+    "lint": "echo \"linting temporarily removed\"",
+    "test": "lint && tap test/*.test.js --coverage --100",
+    "test:report": "lint && tap test/*.test.js --coverage  --coverage-report=html --100",
     "posttest": "tap --coverage --coverage-report=lcovonly",
     "format:all": "prettier --write .",
     "preinstall": "git config --local core.eol lf && git config --local core.autocrlf false && git config --local blame.ignoreRevsFile .gitblameignore"
@@ -41,7 +41,6 @@
     "pino-multi-stream": "^5.1.1",
     "prettier": "^2.6.2",
     "sinon": "^11.1.2",
-    "standard": "^16.0.3",
     "tap": "^15.0.9"
   },
   "dependencies": {
