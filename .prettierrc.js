@@ -8,7 +8,7 @@ const conf = {
 
   // avoid even more merge conflicts: https://prettier.io/blog/2020/03/21/2.0.0.html#change-default-value-for-trailingcomma-to-es5-6963httpsgithubcomprettierprettierpull6963-by-fiskerhttpsgithubcomfisker
   trailingComma: 'all',
-  printWidth: 25,
+  printWidth: 45,
   // Less code per line means:
   //  - less likely to have conflict on any given line
   //  - easier to spot changes in git (e.g. getListThing->getListsThing)
