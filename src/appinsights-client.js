@@ -3,7 +3,7 @@
 const appInsights = require('applicationinsights')
 const stream = require('stream')
 
-class Client {
+class AppInsightsClient {
   constructor(
     /**
      * @type {{
@@ -162,5 +162,5 @@ class Client {
 }
 
 module.exports = {
-  Client,
+  AppInsightsClient,
 }

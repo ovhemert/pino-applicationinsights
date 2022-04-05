@@ -2,13 +2,14 @@
 
 const appInsights = require('applicationinsights')
 const test = require('tap').test
-const tested = require('../src/applicationinsights')
+const tested = require('../src/appinsights-client')
 const sinon = require('sinon')
 
 test('creates client', (t) => {
-  const client = new tested.Client({
-    key: 'blablabla',
-  })
+  const client =
+    new tested.AppInsightsClient({
+      key: 'blablabla',
+    })
   t.ok(
     Object.prototype.hasOwnProperty.call(
       client,
@@ -19,16 +20,17 @@ test('creates client', (t) => {
 })
 
 test('creates client with custom applicationInsights', (t) => {
-  const client = new tested.Client({
-    setup: (insights) => {
-      insights
-        .setup('blablabla')
-        .setUseDiskRetryCaching(false)
-        .start()
-      insights.defaultClient.config.endpointUrl =
-        'https://custom.endpoint'
-    },
-  })
+  const client =
+    new tested.AppInsightsClient({
+      setup: (insights) => {
+        insights
+          .setup('blablabla')
+          .setUseDiskRetryCaching(false)
+          .start()
+        insights.defaultClient.config.endpointUrl =
+          'https://custom.endpoint'
+      },
+    })
   t.equal(
     client.insights.config
       .instrumentationKey,
@@ -66,7 +68,8 @@ test('gets exception from log', (t) => {
       type: 'Error',
     },
   ]
-  const client = new tested.Client()
+  const client =
+    new tested.AppInsightsClient()
   const output = input.map((log) =>
     client.getLogException(log),
   )
@@ -88,7 +91,8 @@ test('gets message from log', (t) => {
       time: 1532081790720,
     },
   ]
-  const client = new tested.Client()
+  const client =
+    new tested.AppInsightsClient()
   const output = input.map((log) =>
     client.getLogMessage(log),
   )
@@ -112,7 +116,8 @@ test('gets properties from log', (t) => {
       pid: 23164,
     },
   ]
-  const client = new tested.Client()
+  const client =
+    new tested.AppInsightsClient()
   const output = input.map((log) =>
     client.getLogProperties(log),
   )
@@ -132,7 +137,8 @@ test('gets properties from log', (t) => {
 
 test('converts severity level', (t) => {
   const input = [10, 20, 30, 40, 50, 60, 99]
-  const client = new tested.Client()
+  const client =
+    new tested.AppInsightsClient()
   const output = input.map((level) =>
     client.getLogSeverity(level),
   )
@@ -142,7 +148,8 @@ test('converts severity level', (t) => {
 
 test('gets severity name', (t) => {
   const input = [0, 1, 2, 3, 4]
-  const client = new tested.Client()
+  const client =
+    new tested.AppInsightsClient()
   const output = input.map((level) =>
     client.getLogSeverityName(level),
   )
@@ -163,7 +170,8 @@ test('inserts trace', (t) => {
     msg: 'info message',
     pid: 9118,
   }
-  const client = new tested.Client()
+  const client =
+    new tested.AppInsightsClient()
   const stubTrace = sinon
     .stub(
       appInsights.defaultClient,
@@ -196,7 +204,8 @@ test('inserts exception', (t) => {
     stack: 'Error: error message',
     v: 1,
   }
-  const client = new tested.Client()
+  const client =
+    new tested.AppInsightsClient()
   const stubException = sinon
     .stub(
       appInsights.defaultClient,
@@ -225,7 +234,8 @@ test('does not insert malformed exception', (t) => {
     stack: 'Error: error message',
     v: 1,
   }
-  const client = new tested.Client()
+  const client =
+    new tested.AppInsightsClient()
   const stubException = sinon.stub(
     appInsights.defaultClient,
     'trackException',
@@ -247,7 +257,8 @@ test('inserts throws exception', (t) => {
     stack: 'Error: error message',
     v: 1,
   }
-  const client = new tested.Client()
+  const client =
+    new tested.AppInsightsClient()
   const stubTrace = sinon
     .stub(
       appInsights.defaultClient,
@@ -260,7 +271,8 @@ test('inserts throws exception', (t) => {
 })
 
 test('calls insert without document', (t) => {
-  const client = new tested.Client()
+  const client =
+    new tested.AppInsightsClient()
   const data = client.insert()
   t.equal(data, undefined)
   t.end()
@@ -291,7 +303,8 @@ test('inserts multiple documents', (t) => {
     appInsights.defaultClient,
     'trackException',
   )
-  const client = new tested.Client()
+  const client =
+    new tested.AppInsightsClient()
   t.doesNotThrow(() => client.insert(input))
   t.equal(stubTrace.callCount, 2)
   t.equal(stubException.callCount, 1)
@@ -305,7 +318,8 @@ test('inserts with write stream', (t) => {
     appInsights.defaultClient,
     'trackTrace',
   )
-  const client = new tested.Client()
+  const client =
+    new tested.AppInsightsClient()
   const log = {
     level: 30,
     time: 1553862903459,

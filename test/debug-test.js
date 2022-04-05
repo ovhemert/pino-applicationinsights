@@ -1,14 +1,15 @@
 'use strict'
 
-const insights = require('../src/applicationinsights')
+const insights = require('../src/appinsights-client')
 
 function main() {
   const iKey =
     process.env
       .APPINSIGHTS_INSTRUMENTATIONKEY
-  const client = new insights.Client({
-    iKey,
-  })
+  const client =
+    new insights.AppInsightsClient({
+      iKey,
+    })
 
   const log = {
     level: 30,

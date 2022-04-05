@@ -1,6 +1,6 @@
 'use strict'
 
-const insights = require('./applicationinsights')
+const insights = require('./appinsights-client')
 const streams = require('./streams')
 const pumpify = require('pumpify')
 
@@ -25,7 +25,7 @@ function createWriteStreamSync(
   const batchStream = streams.batchStream(1)
 
   const aiClientWriteStream =
-    new insights.Client(
+    new insights.AppInsightsClient(
       options,
     ).insertStream()
 
