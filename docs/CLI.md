@@ -18,10 +18,10 @@ node foo | pino-applicationinsights --key blablabla
 
 You can pass the following options via cli arguments:
 
-| Short command | Full command | Description |
-| ------------- | ------------ |-------------|
-| -V | --version | Output the version number |
-| -k | --key &lt;key&gt; | Instrumentation Key of the Azure Application Insights account |
-| -h | --help | Output usage information |
+| Short command | Full command      | Description                                                   |
+| ------------- | ----------------- | ------------------------------------------------------------- |
+| -V            | --version         | Output the version number                                     |
+| -k            | --key &lt;key&gt; | Instrumentation Key of the Azure Application Insights account |
+| -h            | --help            | Output usage information                                      |
 
 See the [API](./API.md) documentation for details.

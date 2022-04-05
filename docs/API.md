@@ -8,12 +8,27 @@ Example:
 const insights = require('pino-applicationinsights')
 const pinoms = require('pino-multi-stream')
 // create the Azure Application Insights destination stream
-const writeStream = insights.createWriteStreamSync()
+const writeStream =
+  insights.createWriteStreamSync()
 // create pino loggger
-const logger = pinoms({ streams: [{stream: writeStream }] })
+const logger = pinoms({
+  streams: [
+    {
+      stream:
+        writeStream,
+    },
+  ],
+})
 // log some events
-logger.info('Informational message')
-logger.error(new Error('things got bad'), 'error message')
+logger.info(
+  'Informational message',
+)
+logger.error(
+  new Error(
+    'things got bad',
+  ),
+  'error message',
+)
 ```
 
 ## Functions
@@ -27,28 +42,42 @@ The `createWriteStream` function is removed.
 Example:
 
 ```js
-const writeStream = insights.createWriteStreamSync({
-  key: 'instrumentationkey'
-})
+const writeStream =
+  insights.createWriteStreamSync(
+    {
+      key: 'instrumentationkey',
+    },
+  )
 ```
 
 #### key
 
-Type: `String` *(optional)*
+Type: `String` _(optional)_
 
 The Instrumentation Key of the Azure Application Insights account. If not specified, defaults to APPINSIGHTS_INSTRUMENTATIONKEY environment variable.
 
 Or you could configure Azure Application Insights with your custom preferences by passing `setup` callback property:
 
 ```js
-const writeStream = insights.createWriteStreamSync({
-  setup: (applicationInsights) =>
-    applicationInsights
-      .setup('instrumentationkey')
-      .setAutoCollectRequests(false)
-      .setAutoCollectDependencies(false)
-      .start()
-})
+const writeStream =
+  insights.createWriteStreamSync(
+    {
+      setup: (
+        applicationInsights,
+      ) =>
+        applicationInsights
+          .setup(
+            'instrumentationkey',
+          )
+          .setAutoCollectRequests(
+            false,
+          )
+          .setAutoCollectDependencies(
+            false,
+          )
+          .start(),
+    },
+  )
 ```
 
 The only parameter of the callback is the applicationInsights instate to setup and call `start` on.

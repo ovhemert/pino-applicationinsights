@@ -34,5 +34,5 @@ Paste the results here:
 
 ## Your Environment
 
-- *os*: Mac, Windows, Linux
-- *any other relevant information*
+- _os_: Mac, Windows, Linux
+- _any other relevant information_

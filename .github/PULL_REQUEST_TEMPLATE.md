@@ -10,4 +10,4 @@ Bug fixes and new features should include tests and possibly benchmarks.
 - [ ] run `npm run test`
 - [ ] tests and/or benchmarks are included
 - [ ] documentation is changed or added
-- [ ] commit message and code follows *Code Of Conduct*
+- [ ] commit message and code follows _Code Of Conduct_
