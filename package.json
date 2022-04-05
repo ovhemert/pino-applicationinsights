@@ -10,7 +10,8 @@
     "test": "standard && tap test/*.test.js --coverage --100",
     "test:report": "standard && tap test/*.test.js --coverage  --coverage-report=html --100",
     "posttest": "tap --coverage --coverage-report=lcovonly",
-    "format:all": "prettier --write ."
+    "format:all": "prettier --write .",
+    "preinstall": "git config --local core.eol lf && git config --local core.autocrlf false && git config --local blame.ignoreRevsFile .gitblameignore"
   },
   "bin": {
     "pino-applicationinsights": "src/cli.js"
