@@ -227,7 +227,17 @@ class AppInsightsClient {
           )
           callback(null)
         } catch (e) {
-          callback(e)
+          if (
+            e instanceof
+            Error
+          ) {
+            callback(e)
+          } else {
+            console.error(
+              'pino-applicationinsights/src/appinsights-client.js received an exception that is not an instanceof Error. Crashing process :)',
+            )
+            process.exit()
+          }
         }
       }
     return writeStream
