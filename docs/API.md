@@ -9,28 +9,33 @@ const insights = require('pino-applicationinsights')
 const pinoms = require('pino-multi-stream')
 // create the Azure Application Insights destination stream
 const writeStream =
-  insights.createWriteStreamSync()
+  insights.createAppInsightsWriteStream()
 // create pino loggger
 const logger = pinoms({
   streams: [
     {
-      stream: writeStream,
+      stream:
+        writeStream,
     },
   ],
 })
 // log some events
-logger.info('Informational message')
+logger.info(
+  'Informational message',
+)
 logger.error(
-  new Error('things got bad'),
+  new Error(
+    'things got bad',
+  ),
   'error message',
 )
 ```
 
 ## Functions
 
-### createWriteStreamSync
+### createAppInsightsWriteStream
 
-The `createWriteStreamSync` function creates a writestream that `pino-multi-stream` can use to send logs to.
+The `createAppInsightsWriteStream` function creates a writestream that `pino-multi-stream` can use to send logs to.
 
 The `createWriteStream` function is removed.
 
@@ -38,9 +43,11 @@ Example:
 
 ```js
 const writeStream =
-  insights.createWriteStreamSync({
-    key: 'instrumentationkey',
-  })
+  insights.createAppInsightsWriteStream(
+    {
+      key: 'instrumentationkey',
+    },
+  )
 ```
 
 #### key
@@ -53,14 +60,24 @@ Or you could configure Azure Application Insights with your custom preferences b
 
 ```js
 const writeStream =
-  insights.createWriteStreamSync({
-    setup: (applicationInsights) =>
-      applicationInsights
-        .setup('instrumentationkey')
-        .setAutoCollectRequests(false)
-        .setAutoCollectDependencies(false)
-        .start(),
-  })
+  insights.createAppInsightsWriteStream(
+    {
+      setup: (
+        applicationInsights,
+      ) =>
+        applicationInsights
+          .setup(
+            'instrumentationkey',
+          )
+          .setAutoCollectRequests(
+            false,
+          )
+          .setAutoCollectDependencies(
+            false,
+          )
+          .start(),
+    },
+  )
 ```
 
 The only parameter of the callback is the applicationInsights instate to setup and call `start` on.

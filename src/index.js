@@ -6,7 +6,7 @@ const {
 const streams = require('./streams')
 const pumpify = require('pumpify')
 
-function createWriteStreamSync(
+function createAppInsightsWriteStream(
   /**
    * @type {import('./setupAppInsights').setupAppInsights}
    */
@@ -41,5 +41,5 @@ function createWriteStreamSync(
 }
 
 module.exports = {
-  createWriteStreamSync,
+  createAppInsightsWriteStream,
 }
