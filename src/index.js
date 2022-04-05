@@ -35,7 +35,7 @@ function createWriteStreamSync(
   const writeStream =
     client.insertStream()
 
-  return pumpify(
+  return new pumpify(
     parseJsonStream,
     batchStream,
     writeStream,
