@@ -4,13 +4,17 @@ const appInsights = require('applicationinsights')
 const stream = require('stream')
 
 class Client {
-  constructor (options = {}) {
-    if (options.setup) {
-      options.setup(appInsights)
-    } else {
-      const iKey = options.key || process.env.APPINSIGHTS_INSTRUMENTATIONKEY
-      appInsights.setup(iKey).start()
-    }
+  constructor (
+    /**
+     * @type {{
+     *   setup: (
+     *     applicationinsights: import('applicationinsights')
+     *   ) => void
+     * }}
+     */
+    options
+  ) {
+    options.setup(appInsights)
     this.insights = appInsights.defaultClient
   }
 
