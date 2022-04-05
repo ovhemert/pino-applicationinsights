@@ -42,5 +42,6 @@ function createWriteStreamSync(
   )
 }
 
-module.exports.createWriteStreamSync =
-  createWriteStreamSync
+module.exports = {
+  createWriteStreamSync,
+}
