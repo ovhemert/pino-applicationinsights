@@ -144,6 +144,7 @@ const getLogSeverityName =
   }
 
 const insertException = (
+  /** @type {import('applicationinsights').TelemetryClient} */
   appInsightsDefaultClient,
   item,
 ) => {
@@ -165,6 +166,7 @@ const insertException = (
 }
 
 const insertTrace = (
+  /** @type {import('applicationinsights').TelemetryClient} */
   appInsightsDefaultClient,
   item,
 ) => {
@@ -188,6 +190,7 @@ const insertTrace = (
 }
 
 const insert = (
+  /** @type {import('applicationinsights').TelemetryClient} */
   appInsightsDefaultClient,
   entities = [],
 ) => {
@@ -210,6 +213,9 @@ const insert = (
         entity.level ===
         50
       ) {
+        console.log(
+          'inserting exception',
+        )
         insertException(
           appInsightsDefaultClient,
           entity,
@@ -220,6 +226,7 @@ const insert = (
 }
 
 const insertStream = (
+  /** @type {import('applicationinsights').TelemetryClient} */
   appInsightsDefaultClient,
 ) => {
   const writeStream =
