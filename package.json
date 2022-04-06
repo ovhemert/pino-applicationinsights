@@ -9,6 +9,7 @@
     "lint": "echo \"linting temporarily removed\"",
     "test": "lint && tap test/*.test.js --coverage --100",
     "test:report": "lint && tap test/*.test.js --coverage  --coverage-report=html --100",
+    "type-check": "tsc --pretty --noEmit",
     "posttest": "tap --coverage --coverage-report=lcovonly",
     "format:all": "prettier --write .",
     "preinstall": "git config --local core.eol lf && git config --local core.autocrlf false && git config --local blame.ignoreRevsFile .gitblameignore"
@@ -38,10 +39,14 @@
     "test"
   ],
   "devDependencies": {
+    "@tsconfig/node16-strictest": "^1.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.18.0",
+    "@typescript-eslint/parser": "^5.18.0",
     "pino-multi-stream": "^5.1.1",
     "prettier": "^2.6.2",
     "sinon": "^11.1.2",
-    "tap": "^15.0.9"
+    "tap": "^15.0.9",
+    "typescript": ">=4.6.3"
   },
   "dependencies": {
     "applicationinsights": "^2.1.4",
