@@ -1,7 +1,7 @@
 'use strict'
 
 const {
-  AppInsightsClient,
+  createAppInsightsWriteSteam,
 } = require('./appinsights-client')
 const streams = require('./streams')
 const pumpify = require('pumpify')
@@ -29,9 +29,9 @@ function createAppInsightsWriteStream(
     )
 
   const aiClientWriteStream =
-    new AppInsightsClient(
+    createAppInsightsWriteSteam(
       setupAppInsights,
-    ).insertStream()
+    )
 
   return new pumpify(
     parseJsonStream,
