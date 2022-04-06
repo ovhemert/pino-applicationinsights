@@ -37,7 +37,12 @@ const getLogException = (
   return err
 }
 
-const getLogMessage = (item) => {
+const getLogMessage = (
+  /**
+   * @type {import('./primitives').LogItem}
+   */
+  item,
+) => {
   if (item.msg) {
     return item.msg
   }
@@ -45,13 +50,16 @@ const getLogMessage = (item) => {
   return getLogSeverityName(severity)
 }
 
-const getLogProperties = (item) => {
-  const props = Object.assign({}, item)
-    delete props.msg
-    return props
-  }
+const getLogProperties = (
+  /** @type {import('./primitives').LogItem} */
+  { msg: _discardedMessage, ...item },
+) => item
 
-const getLogSeverity = (level) => {
+/** @returns {import('./primitives').strictAiSeverityLevel} */
+const getLogSeverity = (
+  /** @type {import('./primitives').pinoSeverityLevel} */
+  level,
+) => {
   if (level === 10 || level === 20) {
     return appInsights.Contracts
       .SeverityLevel.Verbose
@@ -68,11 +76,18 @@ const getLogSeverity = (level) => {
     return appInsights.Contracts
       .SeverityLevel.Critical
   }
-  return appInsights.Contracts.SeverityLevel
-    .Information // 30
+  if (level === 30) {
+    return appInsights.Contracts
+      .SeverityLevel.Information
+  }
+  throw new Error('unknown level:' + level)
 }
 
-const getLogSeverityName = (severity) => {
+/** @returns {import('./primitives').SeverityLevelNames} */
+const getLogSeverityName = (
+  /** @type {import('./primitives').strictAiSeverityLevel} */
+  severity,
+) => {
     if (
       severity ===
     appInsights.Contracts.SeverityLevel
@@ -100,12 +115,22 @@ const getLogSeverityName = (severity) => {
     ) {
       return 'Critical'
     }
+  if (
+    severity ===
+    appInsights.Contracts.SeverityLevel
+      .Information
+  ) {
     return 'Information'
   }
+  throw new Error(
+    'unknown SeverityLevel:' + severity,
+  )
+}
 
 const insertException = (
   /** @type {import('applicationinsights').TelemetryClient} */
   appInsightsDefaultClient,
+  /** @type {import('./primitives').LogItem} */
   item,
 ) => {
   const exception = getLogException(item)
@@ -124,6 +149,7 @@ const insertException = (
 const insertTrace = (
   /** @type {import('applicationinsights').TelemetryClient} */
   appInsightsDefaultClient,
+  /** @type {import('./primitives').LogItem} */
   item,
 ) => {
   const telemetry = {
@@ -139,24 +165,24 @@ const insertTrace = (
 const insert = (
   /** @type {import('applicationinsights').TelemetryClient} */
   appInsightsDefaultClient,
-  entities = [],
+  /** @type {unknown} */
+  streamInput = [], // avoid creating [undefined] array
 ) => {
-  const data = Array.isArray(entities)
-      ? entities
-      : [entities]
-  if (data.length <= 0) {
+  const item = Array.isArray(streamInput)
+    ? streamInput
+    : [streamInput]
+  if (item.length <= 0) {
     return
   }
-  data.forEach((entity) => {
+  item.forEach((item) => {
       insertTrace(
         appInsightsDefaultClient,
-        entity,
+      item,
       )
-    if (entity.level === 50) {
-      console.log('inserting exception')
+    if (item.level === 50) {
         insertException(
           appInsightsDefaultClient,
-          entity,
+        item,
         )
       }
   })
