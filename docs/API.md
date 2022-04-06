@@ -14,19 +14,14 @@ const writeStream =
 const logger = pinoms({
   streams: [
     {
-      stream:
-        writeStream,
+      stream: writeStream,
     },
   ],
 })
 // log some events
-logger.info(
-  'Informational message',
-)
+logger.info('Informational message')
 logger.error(
-  new Error(
-    'things got bad',
-  ),
+  new Error('things got bad'),
   'error message',
 )
 ```
@@ -43,11 +38,9 @@ Example:
 
 ```js
 const writeStream =
-  insights.createWriteStreamSync(
-    {
-      key: 'instrumentationkey',
-    },
-  )
+  insights.createWriteStreamSync({
+    key: 'instrumentationkey',
+  })
 ```
 
 #### key
@@ -60,24 +53,14 @@ Or you could configure Azure Application Insights with your custom preferences b
 
 ```js
 const writeStream =
-  insights.createWriteStreamSync(
-    {
-      setup: (
-        applicationInsights,
-      ) =>
-        applicationInsights
-          .setup(
-            'instrumentationkey',
-          )
-          .setAutoCollectRequests(
-            false,
-          )
-          .setAutoCollectDependencies(
-            false,
-          )
-          .start(),
-    },
-  )
+  insights.createWriteStreamSync({
+    setup: (applicationInsights) =>
+      applicationInsights
+        .setup('instrumentationkey')
+        .setAutoCollectRequests(false)
+        .setAutoCollectDependencies(false)
+        .start(),
+  })
 ```
 
 The only parameter of the callback is the applicationInsights instate to setup and call `start` on.

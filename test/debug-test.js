@@ -6,17 +6,15 @@ function main() {
   const iKey =
     process.env
       .APPINSIGHTS_INSTRUMENTATIONKEY
-  const client =
-    new insights.Client({
-      iKey,
-    })
+  const client = new insights.Client({
+    iKey,
+  })
 
   const log = {
     level: 30,
     time: 1553862903459,
     pid: 23164,
-    hostname:
-      'Osmonds-MacBook-Pro.local',
+    hostname: 'Osmonds-MacBook-Pro.local',
     msg: 'info message',
     v: 1,
   }

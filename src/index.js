@@ -22,10 +22,7 @@ function createWriteStreamSync(
 
   const parseJsonStream =
     streams.parseJsonStream()
-  const batchStream =
-    streams.batchStream(
-      1,
-    )
+  const batchStream = streams.batchStream(1)
 
   const aiClientWriteStream =
     new insights.Client(
