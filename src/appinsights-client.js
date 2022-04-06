@@ -166,9 +166,6 @@ const insert = (
   const item = Array.isArray(streamInput)
     ? streamInput
     : [streamInput]
-  if (item.length <= 0) {
-    return
-  }
   item.forEach((item) => {
     insertTrace(
       appInsightsDefaultClient,
