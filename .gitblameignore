@@ -6,4 +6,8 @@
 #
 # These settings only apply once you've run an install once.
 
+# initial prettier formatting, printWidth: 25
 02456a748fc6f851b64157a74143cb40f56a36b5
+
+# increase prettier printWidth to 45
+962025f68b9c3d45e093e63a2739cfcea33b78bb
