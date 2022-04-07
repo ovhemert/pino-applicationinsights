@@ -23,16 +23,43 @@ const createAppInsightsWriteSteam = (
   )
 }
 
-const getLogException = (item) => {
-  if (
-    item.level !== 50 ||
-    item.type !== 'Error'
-  ) {
-    return
+/**
+ * @type {(
+ *   item: import('./primitives').LogItem
+ * ) => import('./primitives').ExceptionItem}
+ */
+const getLogException = (item) => ({
+  ...item,
+  message:
+    item.msg || crash_logMsgRequired(),
+  // guarantee there's a `name` property:
+  name:
+    item.name !== 'Error'
+      ? item.name
+      : 'Error',
+  stack:
+    item.stack || manuallyCreateStackTrace(),
+})
+
+const manuallyCreateStackTrace = () => {
+  console.warn(
+    'item missing stack trace... adding one now..',
+  )
+  const stack = new Error(
+    'manually created stacktrace',
+  ).stack
+  if (!stack) {
+    throw new Error(
+      'manuallyCreateStackTrace: `new Error(<placeholder>) failed to produce an error with a .stack (stacktrace) property',
+    )
   }
-  const err = new Error(item.msg)
-  err.stack = item.stack || ''
-  return err
+  return stack
+}
+
+const crash_logMsgRequired = () => {
+  throw new Error(
+    'log item has no msg property. Crashing.',
+  )
 }
 
 const getLogMessage = (
@@ -131,12 +158,8 @@ const insertException = (
   /** @type {import('./primitives').LogItem} */
   item,
 ) => {
-  const exception = getLogException(item)
-  if (!exception) {
-    return
-  }
   const telemetry = {
-    exception,
+    exception: getLogException(item),
     properties: getLogProperties(item),
   }
   appInsightsDefaultClient.trackException(
@@ -179,10 +202,21 @@ const insert = (
       item,
     )
     if (item.level === 50) {
-      insertException(
-        appInsightsDefaultClient,
-        item,
-      )
+      if (
+        item.type === 'Error' &&
+        item.stack
+      ) {
+        // Now it's a "real" error...
+        rawConsoleLog('inserting exception')
+        insertException(
+          appInsightsDefaultClient,
+          item,
+        )
+      } else {
+        console.warn(
+          'item may or may not be a "real" exception.',
+        )
+      }
     }
   })
 }
