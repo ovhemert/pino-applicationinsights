@@ -194,12 +194,15 @@ const insertStream = (
       highWaterMark: 1,
     })
   writeStream._write = (
-    chunk,
+    logItems,
     _encoding,
     callback,
   ) => {
     try {
-      insert(appInsightsDefaultClient, chunk)
+      insert(
+        appInsightsDefaultClient,
+        logItems,
+      )
       callback(null)
     } catch (e) {
       if (e instanceof Error) {
