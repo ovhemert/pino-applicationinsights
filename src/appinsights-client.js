@@ -7,37 +7,59 @@ const appInsights = require('applicationinsights')
 const stream = require('stream')
 
 const createAppInsightsWriteSteam = (
-    /**
-     * @type {import('./setupAppInsights').setupAppInsights}
-     */
-    setupAppInsights,
-  ) => {
-    const appInsightsInstance =
+  /**
+   * @type {import('./setupAppInsights').setupAppInsights}
+   */
+  setupAppInsights,
+) => {
+  const appInsightsInstance =
     setupAppInsights(appInsights)
 
-    const appInsightsDefaultClient =
-      appInsightsInstance.defaultClient
+  const appInsightsDefaultClient =
+    appInsightsInstance.defaultClient
 
-    return insertStream(
-      appInsightsDefaultClient,
+  return insertStream(
+    appInsightsDefaultClient,
+  )
+}
+
+/**
+ * @type {(
+ *   item: import('./primitives').LogItem
+ * ) => import('./primitives').ExceptionItem}
+ */
+const getLogException = (item) => ({
+  ...item,
+  message:
+    item.msg || crash_logMsgRequired(),
+  // guarantee there's a `name` property:
+  name:
+    item.name !== 'Error'
+      ? item.name
+      : 'Error',
+  stack:
+    item.stack || manuallyCreateStackTrace(),
+})
+
+const manuallyCreateStackTrace = () => {
+  console.warn(
+    'item missing stack trace... adding one now..',
+  )
+  const stack = new Error(
+    'manually created stacktrace',
+  ).stack
+  if (!stack) {
+    throw new Error(
+      'manuallyCreateStackTrace: `new Error(<placeholder>) failed to produce an error with a .stack (stacktrace) property',
     )
   }
+  return stack
+}
 
-const getLogException = (
-  item,
-) => {
-  if (
-    item.level !== 50 ||
-    item.type !== 'Error'
-  ) {
-    return
-  }
-  const err = new Error(
-    item.msg,
+const crash_logMsgRequired = () => {
+  throw new Error(
+    'log item has no msg property. Crashing.',
   )
-  err.stack =
-    item.stack || ''
-  return err
 }
 
 const getLogMessage = (
@@ -91,33 +113,33 @@ const getLogSeverityName = (
   /** @type {import('./primitives').strictAiSeverityLevel} */
   severity,
 ) => {
-    if (
-      severity ===
+  if (
+    severity ===
     appInsights.Contracts.SeverityLevel
-        .Verbose
-    ) {
-      return 'Verbose'
-    }
-    if (
-      severity ===
+      .Verbose
+  ) {
+    return 'Verbose'
+  }
+  if (
+    severity ===
     appInsights.Contracts.SeverityLevel
-        .Warning
-    ) {
-      return 'Warning'
-    }
-    if (
-      severity ===
+      .Warning
+  ) {
+    return 'Warning'
+  }
+  if (
+    severity ===
     appInsights.Contracts.SeverityLevel.Error
-    ) {
-      return 'Error'
-    }
-    if (
-      severity ===
+  ) {
+    return 'Error'
+  }
+  if (
+    severity ===
     appInsights.Contracts.SeverityLevel
-        .Critical
-    ) {
-      return 'Critical'
-    }
+      .Critical
+  ) {
+    return 'Critical'
+  }
   if (
     severity ===
     appInsights.Contracts.SeverityLevel
@@ -136,12 +158,8 @@ const insertException = (
   /** @type {import('./primitives').LogItem} */
   item,
 ) => {
-  const exception = getLogException(item)
-  if (!exception) {
-    return
-  }
   const telemetry = {
-    exception,
+    exception: getLogException(item),
     properties: getLogProperties(item),
   }
   appInsightsDefaultClient.trackException(
@@ -179,16 +197,27 @@ const insert = (
       'processing log item:',
       item,
     )
-      insertTrace(
-        appInsightsDefaultClient,
+    insertTrace(
+      appInsightsDefaultClient,
       item,
-      )
+    )
     if (item.level === 50) {
+      if (
+        item.type === 'Error' &&
+        item.stack
+      ) {
+        // Now it's a "real" error...
+        rawConsoleLog('inserting exception')
         insertException(
           appInsightsDefaultClient,
-        item,
+          item,
+        )
+      } else {
+        console.warn(
+          'item may or may not be a "real" exception.',
         )
       }
+    }
   })
 }
 
@@ -197,9 +226,9 @@ const insertStream = (
   appInsightsDefaultClient,
 ) => {
   const writeStream = new stream.Writable({
-      objectMode: true,
-      highWaterMark: 1,
-    })
+    objectMode: true,
+    highWaterMark: 1,
+  })
   writeStream._write = (
     logItems,
     _encoding,
