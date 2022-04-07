@@ -1,5 +1,8 @@
 'use strict'
 
+const rawConsoleLog =
+  console.log.bind(console)
+
 const appInsights = require('applicationinsights')
 const stream = require('stream')
 
@@ -172,6 +175,10 @@ const insert = (
     ? streamInput
     : [streamInput]
   item.forEach((item) => {
+    rawConsoleLog(
+      'processing log item:',
+      item,
+    )
       insertTrace(
         appInsightsDefaultClient,
       item,
