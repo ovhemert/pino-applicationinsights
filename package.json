@@ -4,12 +4,14 @@
   "description": "A transport for pino that sends messages to Azure Application Insights",
   "homepage": "https://github.com/ovhemert/pino-applicationinsights",
   "main": "src/index.js",
+  "types": "./dist/index.js",
   "scripts": {
     "dev:cli": "node ./test/debug.js | node ./src/cli.js",
     "lint": "echo \"linting temporarily removed\"",
     "test": "lint && tap test/*.test.js --coverage --100",
     "test:report": "lint && tap test/*.test.js --coverage  --coverage-report=html --100",
     "type-check": "tsc --pretty --noEmit",
+    "generate-type-defs": "tsc --pretty",
     "posttest": "tap --coverage --coverage-report=lcovonly",
     "format:all": "prettier --write .",
     "preinstall": "git config --local core.eol lf && git config --local core.autocrlf false && git config --local blame.ignoreRevsFile .gitblameignore"
