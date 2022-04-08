@@ -50,7 +50,7 @@
     "pino-multi-stream": "^5.1.1",
     "prettier": "^2.6.2",
     "sinon": "^11.1.2",
-    "tap": "^15.0.9",
+    "tap": "^16.0.1",
     "typescript": ">=4.6.3"
   },
   "dependencies": {
@@ -61,6 +61,14 @@
     "pumpify": "^2.0.1",
     "split2": "^3.2.2",
     "stream": "0.0.2"
+  },
+  "overrides:note": [
+    "istanbul-lib-processinfo@^2.0.2 depends on uuid@^3, triggering this warning:",
+    "npm WARN deprecated uuid@3.4.0: Please upgrade  to version 7 or higher.",
+    "Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details."
+  ],
+  "overrides": {
+    "uuid": "^7"
   },
   "volta": {
     "node": "16.14.2",
