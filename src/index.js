@@ -27,11 +27,21 @@ function createAppInsightsWriteStream(
       setupAppInsights,
     )
 
-  return new pumpify(
+  let a = new pumpify(
     parseJsonStream,
     batchStream,
     aiClientWriteStream,
   )
+  console.log(
+    'aiClientWriteStream, stream.Writable',
+  )
+  console.log(
+    Object.keys(aiClientWriteStream),
+  )
+  console.log(Object.keys(a))
+  console.dir(aiClientWriteStream)
+  console.dir(a)
+  return a
 }
 
 module.exports = {
