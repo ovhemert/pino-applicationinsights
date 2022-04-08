@@ -12,10 +12,7 @@ function createAppInsightsWriteStream(
    */
   setupAppInsights,
 ) {
-  if (
-    typeof setupAppInsights ===
-    'object'
-  ) {
+  if (typeof setupAppInsights === 'object') {
     throw new Error(
       "Options object no longer supported. Pass in one setupAppInsights function. Must be at least: require('applicationinsights').setup(process.env.APPINSIGHTS_CONNECTIONSTRING).start()",
     )
@@ -23,10 +20,7 @@ function createAppInsightsWriteStream(
 
   const parseJsonStream =
     streams.parseJsonStream()
-  const batchStream =
-    streams.batchStream(
-      1,
-    )
+  const batchStream = streams.batchStream(1)
 
   const aiClientWriteStream =
     createAppInsightsWriteSteam(
