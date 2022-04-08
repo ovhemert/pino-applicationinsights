@@ -1,3 +1,8 @@
+import applicationinsights_default_export, {
+  Configuration,
+  Contracts,
+} from 'applicationinsights'
+
 // Ideally: SeverityLevel is not an enum, see: https://github.com/microsoft/ApplicationInsights-node.js/issues/942
 export type strictAiSeverityLevel =
   | 0
@@ -42,4 +47,13 @@ export interface ExceptionItem
 export type streamInputData = Array<LogItem>
 
 export type SeverityLevelNames =
-  keyof typeof import('applicationinsights').Contracts.SeverityLevel
+  keyof Contracts.SeverityLevel
+
+export type appInsightsInstance =
+  Configuration
+
+export type setupAppInsights = (
+  /** literally `require('applicationinsights')` */
+  require_applicationinsights: typeof applicationinsights_default_export,
+  // No point in returning the same thing we just passed in:
+) => appInsightsInstance

@@ -8,7 +8,7 @@ const pumpify = require('pumpify')
 
 function createAppInsightsWriteStream(
   /**
-   * @type {import('./setupAppInsights').setupAppInsights}
+   * @type {import('./primitives').setupAppInsights}
    */
   setupAppInsights,
 ) {

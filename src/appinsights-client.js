@@ -8,7 +8,7 @@ const stream = require('stream')
 
 const createAppInsightsWriteSteam = (
   /**
-   * @type {import('./setupAppInsights').setupAppInsights}
+   * @type {import('./primitives').setupAppInsights}
    */
   setupAppInsights,
 ) => {
