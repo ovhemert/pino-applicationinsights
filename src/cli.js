@@ -13,30 +13,20 @@ function main() {
       '-k, --key <key>',
       'Application Insights Instrumentation Key',
     )
-    .action(
-      ({ key }) => {
+    .action(({ key }) => {
         try {
           const writeStream =
             pinoInsights.createAppInsightsWriteStream(
               { key },
             )
-          process.stdin.pipe(
-            writeStream,
-          )
-          console.info(
-            'logging',
-          )
+        process.stdin.pipe(writeStream)
+        console.info('logging')
         } catch (error) {
-          console.log(
-            error.message,
-          )
+        console.log(error.message)
         }
-      },
-    )
+    })
 
-  program.parse(
-    process.argv,
-  )
+  program.parse(process.argv)
 }
 
 main()
