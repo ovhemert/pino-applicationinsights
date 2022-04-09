@@ -1,1 +1,1 @@
-{"version":3,"file":"appinsights-client.d.ts","sourceRoot":"","sources":["appinsights-client.js"],"names":[],"mappings":"AAOA,sEAEY,OAAO,qBAAqB,EAAE,eAAe,mBAOxD"}
+{"version":3,"file":"appinsights-client.d.ts","sourceRoot":"","sources":["../src/appinsights-client.js"],"names":[],"mappings":"AAQA,wEAEY,OAAO,cAAc,EAAE,0BAA0B,mBAO5D"}

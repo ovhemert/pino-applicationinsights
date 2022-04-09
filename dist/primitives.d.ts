@@ -1,4 +1,5 @@
-import applicationinsights_default_export, { TelemetryClient, Contracts } from 'applicationinsights';
+import type applicationinsights_default_export from 'applicationinsights';
+import type { TelemetryClient, Contracts } from 'applicationinsights';
 export declare type strictAiSeverityLevel = 0 | 1 | 2 | 3 | 4;
 export declare type pinoSeverityLevel = 10 | 20 | 30 | 40 | 50 | 60;
 declare type NextLoggerNames = 'console' | 'next.js' | 'Error';
@@ -20,7 +21,7 @@ export interface ExceptionItem extends LogItem {
     stack: string;
 }
 export declare type streamInputData = Array<LogItem>;
-export declare type SeverityLevelNames = keyof Contracts.SeverityLevel;
+export declare type SeverityLevelNames = keyof typeof Contracts.SeverityLevel;
 /**
  * You should likely provide `applicationinsights.defaultClient` but are welcome to try passing in any type of TelemetryClient.
  */
