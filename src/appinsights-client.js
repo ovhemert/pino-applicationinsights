@@ -8,12 +8,12 @@ const stream = require('stream')
 
 const createAppInsightsWriteSteam = (
   /**
-   * @type {import('applicationinsights').TelemetryClient}
+   * @type {import('./primitives').getActiveAppInsightsClient}
    */
-  appInsightsDefaultClient,
+  getActiveAppInsightsClient,
 ) => {
   return insertStream(
-    appInsightsDefaultClient,
+    getActiveAppInsightsClient(appInsights),
   )
 }
 

@@ -1,4 +1,5 @@
-import applicationinsights_default_export, {
+import type applicationinsights_default_export from 'applicationinsights'
+import type {
   TelemetryClient,
   Contracts,
 } from 'applicationinsights'
@@ -47,7 +48,7 @@ export interface ExceptionItem
 export type streamInputData = Array<LogItem>
 
 export type SeverityLevelNames =
-  keyof Contracts.SeverityLevel
+  keyof typeof Contracts.SeverityLevel
 
 /**
  * You should likely provide `applicationinsights.defaultClient` but are welcome to try passing in any type of TelemetryClient.
