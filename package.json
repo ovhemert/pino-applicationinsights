@@ -4,6 +4,7 @@
   "description": "A transport for pino that sends messages to Azure Application Insights",
   "homepage": "https://github.com/ovhemert/pino-applicationinsights",
   "main": "src/index.js",
+  "types": "./dist/index.js",
   "scripts": {
     "dev:cli": "node ./test/debug.js | node ./src/cli.js",
     "lint": "echo \"linting temporarily removed\"",
