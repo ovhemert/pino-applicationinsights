@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// @ts-nocheck
 
 const program = require('commander')
 
@@ -14,16 +15,16 @@ function main() {
       'Application Insights Instrumentation Key',
     )
     .action(({ key }) => {
-        try {
-          const writeStream =
-            pinoInsights.createAppInsightsWriteStream(
-              { key },
-            )
+      try {
+        const writeStream =
+          pinoInsights.createAppInsightsWriteStream(
+            { key },
+          )
         process.stdin.pipe(writeStream)
         console.info('logging')
-        } catch (error) {
+      } catch (error) {
         console.log(error.message)
-        }
+      }
     })
 
   program.parse(process.argv)
