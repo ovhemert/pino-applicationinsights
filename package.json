@@ -10,6 +10,7 @@
     "test": "lint && tap test/*.test.js --coverage --100",
     "test:report": "lint && tap test/*.test.js --coverage  --coverage-report=html --100",
     "type-check": "tsc --pretty --noEmit",
+    "generate-type-defs": "tsc --pretty",
     "posttest": "tap --coverage --coverage-report=lcovonly",
     "format:all": "prettier --write .",
     "preinstall": "git config --local core.eol lf && git config --local core.autocrlf false && git config --local blame.ignoreRevsFile .gitblameignore"
