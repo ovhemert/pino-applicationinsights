@@ -35,7 +35,7 @@ function createFastJsonParsingAppInsightsWriteStream(
 
   const aiClientWriteStream =
     createAppInsightsWriteSteam(
-      getActiveAppInsightsClient(),
+      getActiveAppInsightsClient,
     )
 
   return new pumpify(
