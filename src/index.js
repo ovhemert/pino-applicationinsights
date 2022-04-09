@@ -6,15 +6,26 @@ const {
 const streams = require('./streams')
 const pumpify = require('pumpify')
 
-function createAppInsightsWriteStream(
+function createFastJsonParsingAppInsightsWriteStream(
   /**
-   * @type {import('./primitives').setupAppInsights}
+   * @type {import('./primitives').getActiveAppInsightsClient}
    */
-  setupAppInsights,
+  getActiveAppInsightsClient,
 ) {
-  if (typeof setupAppInsights === 'object') {
+  if (
+    typeof getActiveAppInsightsClient !==
+    'function'
+  ) {
     throw new Error(
-      "Options object no longer supported. Pass in one setupAppInsights function. Must be at least: require('applicationinsights').setup(process.env.APPINSIGHTS_CONNECTIONSTRING).start()",
+      [
+        'Options object no longer supported. Pass in one getActiveAppInsightsClient function.',
+        'Must be at least:',
+        ' module.exports.logger = () => {',
+        "   let ai = require('applicationinsights')",
+        '   ai.setup().start()',
+        '   return ai.defaultClient',
+        ' }',
+      ].join('\n'),
     )
   }
 
@@ -24,7 +35,7 @@ function createAppInsightsWriteStream(
 
   const aiClientWriteStream =
     createAppInsightsWriteSteam(
-      setupAppInsights,
+      getActiveAppInsightsClient(),
     )
 
   return new pumpify(
@@ -35,5 +46,5 @@ function createAppInsightsWriteStream(
 }
 
 module.exports = {
-  createAppInsightsWriteStream,
+  createFastJsonParsingAppInsightsWriteStream,
 }
