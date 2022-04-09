@@ -1,5 +1,5 @@
 import applicationinsights_default_export, {
-  Configuration,
+  TelemetryClient,
   Contracts,
 } from 'applicationinsights'
 
@@ -49,11 +49,18 @@ export type streamInputData = Array<LogItem>
 export type SeverityLevelNames =
   keyof Contracts.SeverityLevel
 
-export type appInsightsInstance =
-  Configuration
+/**
+ * You should likely provide `applicationinsights.defaultClient` but are welcome to try passing in any type of TelemetryClient.
+ */
+export type activeAppInsightsClient =
+  TelemetryClient
 
-export type setupAppInsights = (
+/**
+ * Call `applicationinsights.setup().start()`,
+ * then you can return `applicationinsights.defaultClient` but are welcome to try passing in any type of TelemetryClient.
+ */
+export type getActiveAppInsightsClient = (
   /** literally `require('applicationinsights')` */
   require_applicationinsights: typeof applicationinsights_default_export,
   // No point in returning the same thing we just passed in:
-) => appInsightsInstance
+) => activeAppInsightsClient
