@@ -69,7 +69,7 @@ const getLogMessage = (
   return getLogSeverityName(severity)
 }
 
-const getLogProperties = (
+const copyOverLogPropertiesWithoutMsg = (
   /** @type {import('./primitives').LogItem} */
   { msg: _discardedMessage, ...item },
 ) => item
@@ -155,7 +155,8 @@ const insertException = (
   /** @type {import('applicationinsights/out/Declarations/Contracts').ExceptionTelemetry}  */
   const telemetry = {
     exception: getLogException(item),
-    properties: getLogProperties(item),
+    properties:
+      copyOverLogPropertiesWithoutMsg(item),
   }
   appInsightsDefaultClient.trackException(
     telemetry,
@@ -171,7 +172,8 @@ const insertTrace = (
   const telemetry = {
     message: getLogMessage(item),
     severity: getLogSeverity(item.level),
-    properties: getLogProperties(item),
+    properties:
+      copyOverLogPropertiesWithoutMsg(item),
   }
   appInsightsDefaultClient.trackTrace(
     telemetry,
