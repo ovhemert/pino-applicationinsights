@@ -152,6 +152,7 @@ const insertException = (
   /** @type {import('./primitives').LogItem} */
   item,
 ) => {
+  /** @type {import('applicationinsights/out/Declarations/Contracts').ExceptionTelemetry}  */
   const telemetry = {
     exception: getLogException(item),
     properties: getLogProperties(item),
