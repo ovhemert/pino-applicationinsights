@@ -14,6 +14,7 @@
     "posttest": "tap --coverage --coverage-report=lcovonly",
     "type-check": "tsc --pretty --noEmit",
     "generate-type-defs": "tsc --pretty",
+    "prepublish": "npm run generate-type-defs",
     "preinstall": "git config --local core.eol lf && git config --local core.autocrlf false && git config --local blame.ignoreRevsFile .gitblameignore"
   },
   "bin": {
