@@ -83,6 +83,10 @@ const getLogSeverity = (
     return appInsights.Contracts
       .SeverityLevel.Verbose
   }
+  if (level === 30) {
+    return appInsights.Contracts
+      .SeverityLevel.Information
+  }
   if (level === 40) {
     return appInsights.Contracts
       .SeverityLevel.Warning
@@ -94,10 +98,6 @@ const getLogSeverity = (
   if (level === 60) {
     return appInsights.Contracts
       .SeverityLevel.Critical
-  }
-  if (level === 30) {
-    return appInsights.Contracts
-      .SeverityLevel.Information
   }
   throw new Error('unknown level:' + level)
 }
