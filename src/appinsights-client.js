@@ -78,7 +78,9 @@ const insertException = (
 ) => {
   /** @type {import('applicationinsights/out/Declarations/Contracts').ExceptionTelemetry}  */
   const telemetry = {
-    exception: item.err,
+    exception:
+      item.err ||
+      new Error(getLogMessage(item)),
     severity: mapPinoLevelToAiSeverity(
       item.level,
     ),
