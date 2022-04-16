@@ -82,7 +82,8 @@ const insertException = (
     severity: mapPinoLevelToAiSeverity(
       item.level,
     ),
-    time: item.time,
+    // Could turn item.time into a `Date` object, somehow, perhaps.
+    // time: item.time,
     properties:
       copyOverLogPropertiesWithoutDupes(
         item,
@@ -104,7 +105,8 @@ const insertTrace = (
     severity: mapPinoLevelToAiSeverity(
       item.level,
     ),
-    time: item.time,
+    // Could turn item.time into a `Date` object, somehow, perhaps.
+    // time: item.time,
     properties:
       copyOverLogPropertiesWithoutDupes(
         item,
@@ -132,10 +134,14 @@ const insert = (
     )
     // Copy-out any unique data from error objects:
     if (item.err) {
+      /** @type {Record<string, unknown>} */
       const errData = {}
       for (const k in item.err) {
         if (
-          Object.hasOwn(item.err, k) &&
+          Object.prototype.hasOwnProperty.call(
+            item.err,
+            k,
+          ) &&
           k !== 'name' &&
           k !== 'type' &&
           k !== 'stack' &&

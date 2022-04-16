@@ -30,6 +30,7 @@ export type LogItem = {
   hostname: string
   name: string
   msg: string
+  message?: string // should never really appear, but we check it anyways.
   // This can be an instanceof Error, I think
   err?: {
     type: string
