@@ -79,27 +79,28 @@ const getLogSeverity = (
   /** @type {import('./primitives').pinoSeverityLevel} */
   level,
 ) => {
-  if (level === 10 || level === 20) {
-    return appInsights.Contracts
-      .SeverityLevel.Verbose
+  const SL =
+    appInsights.Contracts.SeverityLevel
+  // 10/20 - console.trace/console.debug? if enabled?
+  if (level < 30) {
+    return SL.Verbose
   }
-  if (level === 30) {
-    return appInsights.Contracts
-      .SeverityLevel.Information
+  // 30 - console.log
+  if (level < 40) {
+    return SL.Information
   }
-  if (level === 40) {
-    return appInsights.Contracts
-      .SeverityLevel.Warning
+  // 40 - console.warn
+  if (level < 50) {
+    return SL.Warning
   }
-  if (level === 50) {
-    return appInsights.Contracts
-      .SeverityLevel.Error
+  // 50 - console.error/exceptions
+  if (level < 60) {
+    return SL.Error
   }
-  if (level === 60) {
-    return appInsights.Contracts
-      .SeverityLevel.Critical
+  // 60 - crash
+  if (level >= 60) {
+    return SL.Critical
   }
-  throw new Error('unknown level:' + level)
 }
 
 /** @returns {import('./primitives').SeverityLevelNames} */
