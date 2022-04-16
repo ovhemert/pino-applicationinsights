@@ -163,27 +163,27 @@ const insert = (
       }
       // using sufficiently unique key to avoid over-writing other data
       item.pinoAI_errData = errData
-    }
-    if (
-      Object.prototype.toString.call(
-        item.err,
-      ) !== '[object Error]'
-    ) {
-      const newRealError = new Error(
-        (item.err.message || // prefer no change
-          getLogMessage(item)) +
-          (!item.err.stack
-            ? ' (Error obj created by pinoAI)'
-            : ''),
-      )
-      if (item.err.stack) {
-        // use original stack trace.
-        newRealError.stack = item.err.stack
-      } else {
-        // newRealError.stack may not be perfect, very accurate, or insightful
-        // But, at least it will be defined, who knows if it will be useful or not.
+      if (
+        Object.prototype.toString.call(
+          item.err,
+        ) !== '[object Error]'
+      ) {
+        const newRealError = new Error(
+          (item.err?.message || // prefer no change
+            getLogMessage(item)) +
+            (!item.err?.stack
+              ? ' (Error obj created by pinoAI)'
+              : ''),
+        )
+        if (item.err?.stack) {
+          // use original stack trace.
+          newRealError.stack = item.err.stack
+        } else {
+          // newRealError.stack may not be perfect, very accurate, or insightful
+          // But, at least it will be defined, who knows if it will be useful or not.
+        }
+        item.err = newRealError
       }
-      item.err = newRealError
     }
     insertTrace(
       appInsightsDefaultClient,
