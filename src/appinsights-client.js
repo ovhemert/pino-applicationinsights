@@ -26,13 +26,12 @@ const getLogMessage = (
    */
   item,
 ) => {
-  if (item.msg) {
-    return item.msg
-  }
-  const severity = mapPinoLevelToAiSeverity(
-    item.level,
+  return (
+    item.msg || // prefer pino-native msg
+    item.message || // just in case
+    item.err?.message ||
+    'no message provided'
   )
-  return getLogSeverityName(severity)
 }
 
 const copyOverLogPropertiesWithoutDupes = (
@@ -69,31 +68,6 @@ const mapPinoLevelToAiSeverity = (
   if (level >= 60) {
     return SL.Critical
   }
-}
-
-/** @returns {import('./primitives').SeverityLevelNames} */
-const getLogSeverityName = (
-  /** @type {import('./primitives').strictAiSeverityLevel} */
-  severity,
-) => {
-  if (severity === SL.Verbose) {
-    return 'Verbose'
-  }
-  if (severity === SL.Warning) {
-    return 'Warning'
-  }
-  if (severity === SL.Error) {
-    return 'Error'
-  }
-  if (severity === SL.Critical) {
-    return 'Critical'
-  }
-  if (severity === SL.Information) {
-    return 'Information'
-  }
-  throw new Error(
-    'unknown SeverityLevel:' + severity,
-  )
 }
 
 const insertException = (
@@ -197,9 +171,7 @@ const insert = (
     ) {
       const newRealError = new Error(
         (item.err.message || // prefer no change
-          item.msg || // prefer pino-native msg
-          item.message || // just in case
-          'no message provided') +
+          getLogMessage(item)) +
           (!item.err.stack
             ? ' (Error obj created by pinoAI)'
             : ''),
