@@ -186,10 +186,10 @@ const insert = (
   /** @type {unknown} */
   streamInput = [], // avoid creating [undefined] array
 ) => {
-  const item = Array.isArray(streamInput)
+  const items = Array.isArray(streamInput)
     ? streamInput
     : [streamInput]
-  item.forEach((item) => {
+  items.forEach((item) => {
     // let the user see server start-up errors and general logs:
     rawConsoleLog(
       //  (collapse whitespace so pino-pretty decides to pretty-print these)
