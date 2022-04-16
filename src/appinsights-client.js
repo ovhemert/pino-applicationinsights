@@ -168,8 +168,10 @@ const insert = (
           errData[k] = item.err[k] // will get copied over by copyOverLogPropertiesWithoutDupes
         }
       }
-      // using sufficiently unique key to avoid over-writing other data
-      item.pinoAI_errData = errData
+      if (Object.keys(errData).length > 0) {
+        // using sufficiently unique key to avoid over-writing other data
+        item.pinoAI_errData = errData
+      }
       if (
         Object.prototype.toString.call(
           item.err,
