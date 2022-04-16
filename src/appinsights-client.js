@@ -181,9 +181,10 @@ const insert = (
     ? streamInput
     : [streamInput]
   item.forEach((item) => {
+    // let the user see server start-up errors and general logs:
     rawConsoleLog(
-      'processing log item:',
-      item,
+      //  (collapse whitespace so pino-pretty decides to pretty-print these)
+      JSON.stringify(item, null, 1),
     )
     insertTrace(
       appInsightsDefaultClient,
