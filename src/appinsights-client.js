@@ -20,45 +20,6 @@ const createAppInsightsWriteSteam = (
   )
 }
 
-/**
- * @type {(
- *   item: import('./primitives').LogItem
- * ) => import('./primitives').ExceptionItem}
- */
-const getLogException = (item) => ({
-  ...item,
-  message:
-    item.msg || crash_logMsgRequired(),
-  // guarantee there's a `name` property:
-  name:
-    item.name !== 'Error'
-      ? item.name
-      : 'Error',
-  stack:
-    item.stack || manuallyCreateStackTrace(),
-})
-
-const manuallyCreateStackTrace = () => {
-  rawConsoleLog(
-    'item missing stack trace... adding one now..',
-  )
-  const stack = new Error(
-    'manually created stacktrace',
-  ).stack
-  if (!stack) {
-    throw new Error(
-      'manuallyCreateStackTrace: `new Error(<placeholder>) failed to produce an error with a .stack (stacktrace) property',
-    )
-  }
-  return stack
-}
-
-const crash_logMsgRequired = () => {
-  throw new Error(
-    'log item has no msg property. Crashing.',
-  )
-}
-
 const getLogMessage = (
   /**
    * @type {import('./primitives').LogItem}
