@@ -48,26 +48,25 @@ const mapPinoLevelToAiSeverity = (
   /** @type {import('./primitives').pinoSeverityLevel} */
   level,
 ) => {
-  // 10/20 - console.trace/console.debug? if enabled?
   if (level < 30) {
+    // 10/20 - console.trace/console.debug? if enabled?
     return SL.Verbose
   }
-  // 30 - console.log
   if (level < 40) {
+    // 30 - console.log
     return SL.Information
   }
-  // 40 - console.warn
   if (level < 50) {
+    // 40 - console.warn
     return SL.Warning
   }
-  // 50 - console.error/exceptions
   if (level < 60) {
+    // 50 - console.error/exceptions
     return SL.Error
   }
   // 60 - crash
-  if (level >= 60) {
-    return SL.Critical
-  }
+  // level >= 60 === true
+  return SL.Critical
 }
 
 const insertException = (
