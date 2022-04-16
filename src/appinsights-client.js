@@ -68,7 +68,9 @@ const getLogMessage = (
   if (item.msg) {
     return item.msg
   }
-  const severity = getLogSeverity(item.level)
+  const severity = mapPinoLevelToAiSeverity(
+    item.level,
+  )
   return getLogSeverityName(severity)
 }
 
@@ -82,7 +84,7 @@ const copyOverLogPropertiesWithoutDupes = (
 ) => item
 
 /** @returns {import('./primitives').strictAiSeverityLevel} */
-const getLogSeverity = (
+const mapPinoLevelToAiSeverity = (
   /** @type {import('./primitives').pinoSeverityLevel} */
   level,
 ) => {
@@ -142,7 +144,9 @@ const insertException = (
   /** @type {import('applicationinsights/out/Declarations/Contracts').ExceptionTelemetry}  */
   const telemetry = {
     exception: item.err,
-    severity: getLogSeverity(item.level),
+    severity: mapPinoLevelToAiSeverity(
+      item.level,
+    ),
     properties:
       copyOverLogPropertiesWithoutDupes(
         item,
@@ -161,7 +165,9 @@ const insertTrace = (
 ) => {
   const telemetry = {
     message: getLogMessage(item),
-    severity: getLogSeverity(item.level),
+    severity: mapPinoLevelToAiSeverity(
+      item.level,
+    ),
     properties:
       copyOverLogPropertiesWithoutDupes(
         item,
