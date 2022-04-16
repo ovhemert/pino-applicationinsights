@@ -31,7 +31,7 @@ export type LogItem = {
   name: string
   msg: string
   // This can be an instanceof Error, I think
-  err: {
+  err?: {
     type: string
     message: string
     stack?: string
