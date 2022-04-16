@@ -187,6 +187,60 @@ const insert = (
       //  (collapse whitespace so pino-pretty decides to pretty-print these)
       JSON.stringify(item, null, 1),
     )
+    // Copy-out any unique data from error objects:
+    if (item.err) {
+      const errData = {}
+      for (const k in item.err) {
+        if (
+          Object.hasOwn(item.err, k) &&
+          k !== 'name' &&
+          k !== 'type' &&
+          k !== 'stack' &&
+          k !== 'message' // ?
+        ) {
+          // pull out excess properties from item.err
+          // These can be present on errors like "port 3000 is taken"
+          //   { ... item.err now?
+          //     err: {
+          //       code: 'EADDRINUSE',
+          //       errno: -48,
+          //       syscall: 'listen',
+          //       address: '0.0.0.0',
+          //       port: 3000
+          //     },
+          //     level: 50,
+          //     time: 1650069194014,
+          //     pid: 79907,
+          //     hostname: 'MacBook-Air',
+          //     name: 'next-logger-strict-console',
+          //     prefix: 'error'
+          //   }
+          errData[k] = item.err[k] // will get copied over by copyOverLogPropertiesWithoutDupes
+        }
+      }
+      // using sufficiently unique key to avoid over-writing other data
+      item.pinoAI_errData = errData
+    }
+    if (
+      Object.prototype.toString.call(
+        item.err,
+      ) !== '[object Error]'
+    ) {
+      const newRealError = new Error(
+        (item.err.message ||
+          item.msg ||
+          item.prefix) +
+          ' (Error obj created by pinoAI)',
+      )
+      if (item.err.stack) {
+        // use original stack trace.
+        newRealError.stack = item.err.stack
+      } else {
+        // newRealError.stack may not be perfect, very accurate, or insightful
+        // But, at least it will be defined, who knows if it will be useful or not.
+      }
+      item.err = newRealError
+    }
     insertTrace(
       appInsightsDefaultClient,
       item,
