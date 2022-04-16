@@ -30,8 +30,27 @@ export type LogItem = {
   hostname: string
   name: string
   msg: string
-  /** speculating, need to verify.. */
-  stack?: string
+  // This can be an instanceof Error, I think
+  err: {
+    type: string
+    message: string
+    stack?: string
+    // Error: listen EADDRINUSE: address already in use 0.0.0.0:3000
+    // at Server.setupListenHandle [as _listen2] (node:net:1330:16)
+    //   ...
+    //   code: 'EADDRINUSE',
+    //   errno: -48,
+    //   syscall: 'listen',
+    //   address: '0.0.0.0',
+    //   port: 3000
+    // }
+    code?: string // 'EADDRINUSE'
+    errno?: number // -48
+    syscall?: string // 'listen'
+    address?: string // '0.0.0.0'
+    port?: number // 3000
+    [x: string | symbol | number]: unknown
+  }
 }
 
 export interface ExceptionItem
