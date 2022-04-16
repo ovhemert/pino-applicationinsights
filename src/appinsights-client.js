@@ -190,17 +190,7 @@ const insert = (
       appInsightsDefaultClient,
       item,
     )
-    if (item.level === 50) {
-      if (
-        item.type === 'Error' &&
-        item.stack
-      ) {
-        // Now it's a "real" error...
-        rawConsoleLog('inserting exception')
-        insertException(
-          appInsightsDefaultClient,
-          item,
-        )
+    if (item.level >= 50) {
       } else {
         rawConsoleLog(
           'item may or may not be a "real" exception.',
