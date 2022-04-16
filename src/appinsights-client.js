@@ -142,6 +142,7 @@ const insertException = (
   /** @type {import('applicationinsights/out/Declarations/Contracts').ExceptionTelemetry}  */
   const telemetry = {
     exception: getLogException(item),
+    severity: getLogSeverity(item.level),
     properties:
       copyOverLogPropertiesWithoutDupes(
         item,
