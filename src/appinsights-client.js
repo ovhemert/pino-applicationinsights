@@ -235,10 +235,13 @@ const insert = (
       ) !== '[object Error]'
     ) {
       const newRealError = new Error(
-        (item.err.message ||
-          item.msg ||
-          item.prefix) +
-          ' (Error obj created by pinoAI)',
+        (item.err.message || // prefer no change
+          item.msg || // prefer pino-native msg
+          item.message || // just in case
+          'no message provided') +
+          (!item.err.stack
+            ? ' (Error obj created by pinoAI)'
+            : ''),
       )
       if (item.err.stack) {
         // use original stack trace.
