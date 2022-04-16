@@ -1,7 +1,7 @@
 'use strict'
 
 const rawConsoleLog =
-  console.log.bind(console)
+  console.debug.bind(console)
 
 const appInsights = require('applicationinsights')
 const stream = require('stream')
@@ -36,7 +36,7 @@ const getLogException = (item) => ({
 })
 
 const manuallyCreateStackTrace = () => {
-  console.warn(
+  rawConsoleLog(
     'item missing stack trace... adding one now..',
   )
   const stack = new Error(
@@ -210,7 +210,7 @@ const insert = (
           item,
         )
       } else {
-        console.warn(
+        rawConsoleLog(
           'item may or may not be a "real" exception.',
         )
       }
