@@ -130,10 +130,15 @@ const insert = (
     ? streamInput
     : [streamInput]
   items.forEach((item) => {
+    const {
+      // Noisy when logs hit pino-pretty/stdout
+      prefix: _discardedPrefix,
+      ...itemWithoutPrefix
+    } = item
     // let the user see server start-up errors and general logs:
     rawConsoleLog(
       //  (collapse whitespace so pino-pretty decides to pretty-print these)
-      JSON.stringify(item, null, 1),
+      JSON.stringify(itemWithoutPrefix),
     )
     // Copy-out any unique data from error objects:
     if (item.err) {
