@@ -147,6 +147,7 @@ const insertException = (
     severity: mapPinoLevelToAiSeverity(
       item.level,
     ),
+    time: item.time,
     properties:
       copyOverLogPropertiesWithoutDupes(
         item,
@@ -168,6 +169,7 @@ const insertTrace = (
     severity: mapPinoLevelToAiSeverity(
       item.level,
     ),
+    time: item.time,
     properties:
       copyOverLogPropertiesWithoutDupes(
         item,
