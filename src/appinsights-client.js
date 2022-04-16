@@ -192,11 +192,10 @@ const insert = (
       item,
     )
     if (item.level >= 50) {
-      } else {
-        rawConsoleLog(
-          'item may or may not be a "real" exception.',
-        )
-      }
+      insertException(
+        appInsightsDefaultClient,
+        item,
+      )
     }
   })
 }
