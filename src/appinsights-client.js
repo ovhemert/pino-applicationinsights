@@ -6,6 +6,9 @@ const rawConsoleLog =
 const appInsights = require('applicationinsights')
 const stream = require('stream')
 
+const SL =
+  appInsights.Contracts.SeverityLevel
+
 const createAppInsightsWriteSteam = (
   /**
    * @type {import('./primitives').getActiveAppInsightsClient}
@@ -79,8 +82,6 @@ const getLogSeverity = (
   /** @type {import('./primitives').pinoSeverityLevel} */
   level,
 ) => {
-  const SL =
-    appInsights.Contracts.SeverityLevel
   // 10/20 - console.trace/console.debug? if enabled?
   if (level < 30) {
     return SL.Verbose
@@ -108,38 +109,19 @@ const getLogSeverityName = (
   /** @type {import('./primitives').strictAiSeverityLevel} */
   severity,
 ) => {
-  if (
-    severity ===
-    appInsights.Contracts.SeverityLevel
-      .Verbose
-  ) {
+  if (severity === SL.Verbose) {
     return 'Verbose'
   }
-  if (
-    severity ===
-    appInsights.Contracts.SeverityLevel
-      .Warning
-  ) {
+  if (severity === SL.Warning) {
     return 'Warning'
   }
-  if (
-    severity ===
-    appInsights.Contracts.SeverityLevel.Error
-  ) {
+  if (severity === SL.Error) {
     return 'Error'
   }
-  if (
-    severity ===
-    appInsights.Contracts.SeverityLevel
-      .Critical
-  ) {
+  if (severity === SL.Critical) {
     return 'Critical'
   }
-  if (
-    severity ===
-    appInsights.Contracts.SeverityLevel
-      .Information
-  ) {
+  if (severity === SL.Information) {
     return 'Information'
   }
   throw new Error(
