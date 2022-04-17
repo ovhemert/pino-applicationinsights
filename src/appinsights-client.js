@@ -39,6 +39,7 @@ const copyOverLogPropertiesWithoutDupes = (
   {
     msg: _discardedMessage,
     level: _discardedLevel,
+    err: _discardedErr,
     ...item
   },
 ) => item
@@ -92,6 +93,7 @@ const insertException = (
         item,
       ),
   }
+  rawConsoleLog('exception', telemetry)
   appInsightsDefaultClient.trackException(
     telemetry,
   )
@@ -115,6 +117,7 @@ const insertTrace = (
         item,
       ),
   }
+  rawConsoleLog('trace', telemetry)
   appInsightsDefaultClient.trackTrace(
     telemetry,
   )
