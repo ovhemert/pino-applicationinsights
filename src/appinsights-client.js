@@ -161,14 +161,15 @@ const insert = (
     const {
       // Noisy when logs hit pino-pretty/stdout
       prefix: _discardedPrefix,
-      ...itemWithoutPrefix
+      // ...itemWithoutPrefix
     } = item
     // let the user see server start-up errors and general logs:
+    // They will see errors being sent to applicationinsights
     // TODO: allow user to customize this somehow...
-    rawConsoleLog(
-      //  (collapse whitespace so pino-pretty decides to pretty-print these)
-      JSON.stringify(itemWithoutPrefix),
-    )
+    // rawConsoleLog(
+    //   //  (collapse whitespace so pino-pretty decides to pretty-print these)
+    //   JSON.stringify(itemWithoutPrefix),
+    // )
     // Copy-out any unique data from error objects:
     if (item.err) {
       /** @type {Record<string, unknown>} */
