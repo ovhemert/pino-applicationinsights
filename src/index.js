@@ -38,11 +38,17 @@ function createFastJsonParsingAppInsightsWriteStream(
       getActiveAppInsightsClient,
     )
 
-  return new pumpify(
+  const pump = new pumpify(
     parseJsonStream,
     batchStream,
     aiClientWriteStream,
   )
+
+  /** @type {import('pino').DestinationStream} */
+  // @ts-expect-error
+  const pumpAsWriteStream = pump
+
+  return pump
 }
 
 module.exports = {
