@@ -112,7 +112,10 @@ const insertException = (
         item,
       ),
   }
-  rawConsoleLog('exception', telemetry)
+  rawConsoleLog(
+    'sending applicationinsights exception:',
+    telemetry,
+  )
   appInsightsDefaultClient.trackException(
     telemetry,
   )
@@ -136,7 +139,10 @@ const insertTrace = (
         item,
       ),
   }
-  rawConsoleLog('trace', telemetry)
+  rawConsoleLog(
+    'sending applicationinsights trace log:',
+    telemetry,
+  )
   appInsightsDefaultClient.trackTrace(
     telemetry,
   )
