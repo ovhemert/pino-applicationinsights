@@ -139,6 +139,7 @@ const insert = (
       ...itemWithoutPrefix
     } = item
     // let the user see server start-up errors and general logs:
+    // TODO: allow user to customize this somehow...
     rawConsoleLog(
       //  (collapse whitespace so pino-pretty decides to pretty-print these)
       JSON.stringify(itemWithoutPrefix),
