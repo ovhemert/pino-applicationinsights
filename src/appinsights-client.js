@@ -1,7 +1,26 @@
 'use strict'
 
+const debugConsole =
+  // TODO make originalConsole stuff from next-logger a separate package...
+  // want very specific ts-expect-error directives:
+  // prettier-ignore
+  typeof globalThis !== undefined &&
+  globalThis
+      // @ts-expect-error
+      .originalConsole
+    ? globalThis
+        // @ts-expect-error
+        .originalConsole
+    : global
+        // @ts-expect-error
+        .originalConsole
+    ? global
+        // @ts-expect-error
+        .originalConsole
+    : console
+
 const rawConsoleLog =
-  console.debug.bind(console)
+  debugConsole.debug.bind(debugConsole)
 
 const appInsights = require('applicationinsights')
 const stream = require('stream')
