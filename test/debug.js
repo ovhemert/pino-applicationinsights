@@ -1,11 +1,10 @@
 'use strict'
 
-const pinoms = require('pino-multi-stream')
+const pino = require('pino')
 
-const logger = pinoms({
-  streams: [{ stream: process.stdout }]
-})
-logger.level = 'trace'
+const logger = pino({
+  level: 'trace'
+}, pino.multistream([{ stream: process.stdout }]))
 
 logger.trace('trace message')
 logger.debug('debug message')
