@@ -6,11 +6,11 @@ Example:
 
 ```js
 const insights = require('pino-applicationinsights')
-const pinoms = require('pino-multi-stream')
+const pino = require('pino')
 // create the Azure Application Insights destination stream
 const writeStream = await insights.createWriteStream()
 // create pino loggger
-const logger = pinoms({ streams: [{stream: writeStream }] })
+const logger = pino({ level: 'trace'}, pino.multistream([{stream: writeStream }]) )
 // log some events
 logger.info('Informational message')
 logger.error(new Error('things got bad'), 'error message')
@@ -20,7 +20,7 @@ logger.error(new Error('things got bad'), 'error message')
 
 ### createWriteStream
 
-The `createWriteStream` function creates a writestream that `pino-multi-stream` can use to send logs to.
+The `createWriteStream` function creates a writestream that `pino.multistream` can use to send logs to.
 
 Example:
 
